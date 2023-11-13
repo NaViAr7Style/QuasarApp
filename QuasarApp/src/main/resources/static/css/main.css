@@ -1,0 +1,39 @@
+html {
+    height: 100%;
+}
+
+body {
+    background-image: url('/images/new.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+
+.greeting-container {
+    margin-top: 140px !important;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover {
+    color: darkgrey;
+}
+
+.logout-button {
+    background-color: #343a40;
+    color: white;
+}
+
+.logout-button:hover {
+    color: darkgrey;
+}
+
+.footer {
+    height: 10vh;
+}
+
+/* TODO: Fix CSS and add responsive design */
