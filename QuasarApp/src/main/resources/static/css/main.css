@@ -3,12 +3,24 @@ html {
 }
 
 body {
-    background-image: url('/images/new.jpg');
+    background-image: url('/images/main-background.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     background-color: #464646;
+}
+
+.navbar-wrapper {
+    width: 100%;
+}
+
+.navbar-container {
+    width: 30vw;
+}
+
+.nav-item {
+    margin: auto 20px;
 }
 
 .greeting-container {
@@ -23,17 +35,17 @@ body {
     color: darkgrey;
 }
 
-.logout-button {
-    background-color: #343a40;
+.hamburger-menu-button {
+    border: 0.5mm solid white;
+    border-radius: 2mm;
+}
+
+.hamburger-menu-icon {
     color: white;
 }
 
-.logout-button:hover {
-    color: darkgrey;
-}
-
 .footer {
-    height: 10vh;
+    height: 86px;
 }
 
 /* TODO: Fix CSS and add responsive design */
