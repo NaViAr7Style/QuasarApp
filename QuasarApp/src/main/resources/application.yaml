@@ -19,3 +19,6 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+
+quasar:
+  remember.me.key: ${REMEMBER_ME_KEY}
