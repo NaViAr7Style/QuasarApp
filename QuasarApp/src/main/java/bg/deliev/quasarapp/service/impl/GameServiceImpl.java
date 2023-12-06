@@ -1,12 +1,16 @@
 package bg.deliev.quasarapp.service.impl;
 
+import bg.deliev.quasarapp.model.dto.GameDetailsDTO;
 import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
+import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -24,5 +28,15 @@ public class GameServiceImpl implements GameService {
         return gameRepository
                 .findAll(pageable)
                 .map(gameEntity -> modelMapper.map(gameEntity, GameSummaryDTO.class));
+    }
+
+    @Override
+    public GameDetailsDTO getGameDetails(Long id) {
+
+        GameEntity gameEntity = gameRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Game with ID + " + id + " was not found"));
+
+        return modelMapper.map(gameEntity, GameDetailsDTO.class);
     }
 }
