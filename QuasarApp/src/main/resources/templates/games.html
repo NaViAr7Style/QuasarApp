@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}">
+</head>
+
+<body>
+    
+	<div>
+        <nav th:replace="~{fragments/navbar}"></nav>
+	</div>
+
+
+    <div class="container-fluid">
+        <h2 class="text-center text-white">All Games</h2>
+        <div class="games row mx-auto d-flex flex-row justify-content-center">
+            <div
+                th:each="game : ${games.getContent()}"
+                th:object="${game}"
+                class="game card col-sm-6 col-md-3  col-lg-2 m-5 p-0">
+                <div class="card-img-top-wrapper">
+                    <img class="card-img-top" th:src="*{thumbnailUrl}" alt="game image">
+                </div>
+                <div class="card-body pb-1">
+                    <h5 class="card-title text-center" th:text="*{name}">Game title</h5>
+                    <ul class="games-details list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="card-text">
+                                <span>• Genre:</span>
+                                <th:block th:text="*{genre}">Game genre</th:block>
+                            </div>
+                            <div class="card-text">
+                                <span>• Price:</span>
+                                <th:block th:text="*{price} == 0 ? 'Free' : *{price}">123</th:block>
+                                <span> BGN</span>
+                            </div>
+                            <div class="card-text">
+                                <span>• Publisher:</span>
+                                <th:block th:text="*{publisherName}">Game publisher</th:block>
+                            </div>
+<!--                            <div class="card-text">-->
+<!--                                <span>• Description:</span>-->
+<!--                                <th:block th:text="*{description}">Game description</th:block>-->
+<!--                            </div>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <a class="card-link" th:href="@{/game/{id}(id=*{id})}">Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-center align-items-center pagination-container-wrapper">
+            <div class="pagination-container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+
+                        <!-- First page logic start -->
+                        <li class="page-item" th:classappend="${games.isFirst() ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/games/all(size=${games.getSize()})}"
+                               aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <!-- First page logic end -->
+
+                        <!-- Previous page logic start -->
+                        <li class="page-item" th:classappend="${games.isFirst() ? 'disabled' : ''}">
+                            <a class="page-link"
+                                th:href="@{/games/all(size=${games.getSize()}, page=${games.number - 1})}">
+                                Previous
+                            </a>
+                        </li>
+                        <!-- Previous page logic end -->
+
+                        <!-- Next page logic start -->
+                        <li class="page-item" th:classappend="${games.isLast() ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/games/all(size=${games.getSize()}, page=${games.number + 1})}">
+                                Next
+                            </a>
+                        </li>
+                        <!-- Next page logic end -->
+
+                        <!-- Last page logic start -->
+                        <li class="page-item" th:classappend="${games.isLast() ? 'disabled' : ''}">
+                            <a class="page-link"
+                               th:href="@{/games/all(size=${games.getSize()}, page=${games.getTotalPages() - 1})}"
+                               aria-label="Last">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <!-- Last page logic end -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    <div>
+        <footer th:replace="~{/fragments/footer}"> </footer>
+    </div>
+
+</body>
+</html>

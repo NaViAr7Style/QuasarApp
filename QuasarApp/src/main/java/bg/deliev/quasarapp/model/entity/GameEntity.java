@@ -2,7 +2,7 @@ package bg.deliev.quasarapp.model.entity;
 
 import bg.deliev.quasarapp.model.enums.GameGenreEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,14 +21,17 @@ public class GameEntity extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    @Positive
+    @PositiveOrZero
     private BigDecimal price;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private GameGenreEnum genre;
 
+    @Column(name = "thumbnail_url", nullable = false, columnDefinition = "TEXT")
+    private String thumbnailUrl;
+
     @ManyToOne(optional = false)
-    private ManufacturerEntity manufacturer;
+    private PublisherEntity publisher;
 
 }

@@ -1,11 +1,9 @@
 package bg.deliev.quasarapp.model.dto;
 
-import bg.deliev.quasarapp.model.validation.MatchesPattern;
 import bg.deliev.quasarapp.model.validation.StringFieldMatch;
 import bg.deliev.quasarapp.model.validation.UniqueUserEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 

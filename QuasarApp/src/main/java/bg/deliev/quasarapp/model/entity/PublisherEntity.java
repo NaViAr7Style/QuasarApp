@@ -7,16 +7,16 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "manufacturers")
+@Table(name = "publishers")
 @Getter
 @Setter
-public class ManufacturerEntity extends BaseEntity {
+public class PublisherEntity extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String name;
 
     @OneToMany(targetEntity = GameEntity.class,
-            mappedBy = "manufacturer",
+            mappedBy = "publisher",
             fetch = FetchType.LAZY)
     private List<GameEntity> games;
 }

@@ -9,6 +9,19 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-color: #464646;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    flex: 1;
+    margin-top: 100px;
+}
+
+.greeting-container {
+    margin-top: 140px;
 }
 
 .navbar-wrapper {
@@ -16,7 +29,11 @@ body {
 }
 
 .navbar-container {
-    width: 30vw;
+    width: 20vw;
+}
+
+.navbar-main-container {
+    width: 56vw;
 }
 
 .page-content-container {
@@ -25,10 +42,6 @@ body {
 
 .nav-item {
     margin: auto 20px;
-}
-
-.greeting-container {
-    margin-top: 140px !important;
 }
 
 .nav-link {
@@ -49,7 +62,8 @@ body {
 }
 
 .footer {
-    height: 86px;
+    margin-top: auto;
+    height: 50px;
 }
 
 .rememberme {
@@ -66,5 +80,38 @@ body {
 .rememberme-check {
     width: 12px;
 }
+
+.faq-container {
+    margin-top: 140px;
+    max-width: 600px;
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+}
+
+.question {
+    font-weight: bold;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.answer {
+    display: none;
+    margin-top: 10px;
+}
+
+.pagination-container-wrapper {
+    max-height: 50px;
+}
+
+.pagination-container {
+    display: inline-flex;
+}
+
 
 /* TODO: Fix CSS and add responsive design */
