@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}">
+    <title></title>
+</head>
+
+<body class="text-white">
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container mt-5">
+
+    <!--    TODO: Capture post request-->
+    <h1>Contact Us</h1>
+
+    <p>Have questions, suggestions, or just want to say hello? We'd love to hear from you!</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="name" class="text-white">Your Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="text-white">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="text-white">Your Message</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Type your message"></textarea>
+                </div>
+                <button type="submit" class="contact-form-submit-btn btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-end">
+                <div>
+                    <h4>Our Office</h4>
+                    <p>
+                        Quasar Games<br>
+                        123 Gaming Street<br>
+                        GameCity, GX 12345<br>
+                        Game Nation
+                    </p>
+                    <p><strong>Email:</strong> info@quasargames.com</p>
+                    <p><strong>Phone:</strong> 123-456-789</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <footer th:replace="~{/fragments/footer}"></footer>
+</div>
+
+</body>
+</html>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
-        xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
+    <title></title>
 </head>
 
 <body>
@@ -11,16 +12,16 @@
     <nav th:replace="~{fragments/navbar}"></nav>
 </div>
 
-<div class="container page-content-container">
+<div class="container mt-5">
     <h2 class="text-center text-white mb-5">Register User</h2>
 
     <!-- REGISTRATION FORM START -->
     <form
-        id="registration-form"
-        th:action="@{/users/register}"
-        th:method="POST"
-        th:object="${userRegistrationDTO}"
-        class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+            id="registration-form"
+            th:action="@{/users/register}"
+            th:method="POST"
+            th:object="${userRegistrationDTO}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
         <div th:if="${hasRegistrationError}"
              class="d-flex mt-4 mb-4 alert-danger justify-content-center align-items-center h-75 text-center"
@@ -31,12 +32,12 @@
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
-                <input  id="firstName"
-                        th:name="firstName"
-                        th:field="*{firstName}"
-                        type="text"
-                        class="form-control"
-                        placeholder="First name"/>
+                <input id="firstName"
+                       th:name="firstName"
+                       th:field="*{firstName}"
+                       type="text"
+                       class="form-control"
+                       placeholder="First name"/>
                 <p th:if="${#fields.hasErrors('firstName')}"
                    th:errors="*{firstName}"
                    class="errors alert alert-danger">
@@ -106,7 +107,7 @@
         </div>
 
         <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn btn-light mb-3" value="Register">Register</button>
+            <button type="submit" class="btn btn-info mb-3" value="Register">Register</button>
         </div>
 
     </form>
@@ -116,7 +117,7 @@
 
 
 <div>
-    <footer th:replace="~{/fragments/footer}"> </footer>
+    <footer th:replace="~{/fragments/footer}"></footer>
 </div>
 
 </body>

@@ -1,7 +1,7 @@
 package bg.deliev.quasarapp.config;
 
 import bg.deliev.quasarapp.repository.UserRepository;
-import bg.deliev.quasarapp.service.impl.QuasarUserDetailsService;
+import bg.deliev.quasarapp.service.authentication.QuasarUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -9,5 +9,9 @@ public interface GameService {
 
     Page<GameSummaryDTO> getAllGames(Pageable pageable);
 
+    Page<GameSummaryDTO> getAllGamesByPublisherId(long publisherId, Pageable pageable);
+
     GameDetailsDTO getGameDetails(Long id);
+
+    void deleteOffer(Long id);
 }

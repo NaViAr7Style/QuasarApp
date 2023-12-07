@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}">
+    <title></title>
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">About Us</h1>
+        <p class="lead">Welcome to Quasar, your go-to online game webshop!</p>
+        <hr class="my-4">
+        <p>At Quasar, we're passionate about gaming and committed to providing a diverse selection of games for various
+            platforms. Our mission is to make gaming more accessible and enjoyable for everyone.</p>
+        <p>We stand out by offering:</p>
+        <ul>
+            <li><strong>Exclusive Deals:</strong> We provide exclusive deals and discounts to make gaming more
+                affordable.
+            </li>
+            <li><strong>User-Friendly Interface:</strong> Our user-friendly interface simplifies the process of
+                discovering and enjoying new titles.
+            </li>
+            <li><strong>Regular Updates:</strong> Stay connected with Quasar to benefit from our regular updates,
+                ensuring you never miss out on the latest game releases and special promotions.
+            </li>
+        </ul>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" th:href="@{/games/all}" role="button">Get Started</a>
+        </p>
+    </div>
+</div>
+
+<div>
+    <footer th:replace="~{/fragments/footer}"></footer>
+</div>
+
+
+</body>
+</html>

@@ -31,6 +31,13 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    public Page<GameSummaryDTO> getAllGamesByPublisherId(long publisherId, Pageable pageable) {
+        return gameRepository
+                .findAllByPublisherId(publisherId, pageable)
+                .map(gameEntity -> modelMapper.map(gameEntity, GameSummaryDTO.class));
+    }
+
+    @Override
     public GameDetailsDTO getGameDetails(Long id) {
 
         GameEntity gameEntity = gameRepository
@@ -38,5 +45,10 @@ public class GameServiceImpl implements GameService {
                 .orElseThrow(() -> new NoSuchElementException("Game with ID + " + id + " was not found"));
 
         return modelMapper.map(gameEntity, GameDetailsDTO.class);
+    }
+
+    @Override
+    public void deleteOffer(Long id) {
+        gameRepository.deleteById(id);
     }
 }

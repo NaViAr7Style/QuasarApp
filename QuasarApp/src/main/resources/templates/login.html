@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
+    <title></title>
 </head>
 
 <body>
@@ -11,7 +12,7 @@
     <nav th:replace="~{fragments/navbar}"></nav>
 </div>
 
-<div class="container page-content-container">
+<div class="container mt-5">
     <h2 class="text-center text-white">Login</h2>
     <form th:method="POST"
           th:action="@{/users/login}"
@@ -39,7 +40,7 @@
             <label for="rememberme" class="rememberme-label text-white font-weight-bold">Remember me</label>
             <input id="rememberme" name="rememberme" type="checkbox" class="rememberme-check form-control"/>
         </div>
-        
+
         <p th:if="${bad_credentials}" class="errors alert alert-danger">
             Invalid username or password.
         </p>
@@ -55,7 +56,7 @@
 </div>
 
 <div>
-    <footer th:replace="~{/fragments/footer}"> </footer>
+    <footer th:replace="~{/fragments/footer}"></footer>
 </div>
 
 </body>

@@ -9,19 +9,33 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-color: #464646;
-    overflow-x: auto;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    padding-top: 100px;
+    overflow-x: auto;
+
 }
 
 .container-fluid {
     flex: 1;
-    margin-top: 100px;
+    overflow: auto;
+    height: 100%;
 }
 
-.greeting-container {
-    margin-top: 140px;
+.game-details-container,
+.pagination-container-wrapper,
+.contact-form-submit-btn {
+    margin-bottom: 6rem;
+}
+
+
+
+.custom-toggler-icon {
+    color: white;
+}
+
+button.navbar-toggler[aria-expanded="true"] {
+    margin-left: 40px;
 }
 
 .navbar-wrapper {
@@ -34,10 +48,6 @@ body {
 
 .navbar-main-container {
     width: 56vw;
-}
-
-.page-content-container {
-    margin-top: 120px;
 }
 
 .nav-item {
@@ -113,5 +123,6 @@ body {
     display: inline-flex;
 }
 
-
-/* TODO: Fix CSS and add responsive design */
+.empty-content-container {
+    font-size: 24px;
+}

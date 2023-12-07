@@ -15,6 +15,9 @@ public class PublisherEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(name = "thumbnail_url", nullable = false, columnDefinition = "TEXT")
+    private String thumbnailUrl;
+
     @OneToMany(targetEntity = GameEntity.class,
             mappedBy = "publisher",
             fetch = FetchType.LAZY)

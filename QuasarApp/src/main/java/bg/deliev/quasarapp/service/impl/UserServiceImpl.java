@@ -7,7 +7,6 @@ import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import bg.deliev.quasarapp.repository.RoleRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.interfaces.UserService;
-import jakarta.persistence.PersistenceException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
