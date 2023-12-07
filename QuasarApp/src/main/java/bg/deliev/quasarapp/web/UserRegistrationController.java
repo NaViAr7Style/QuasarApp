@@ -21,16 +21,16 @@ public class UserRegistrationController {
         this.userService = userService;
     }
 
-    @GetMapping("register")
+    @GetMapping("/register")
     public ModelAndView register(
             @ModelAttribute("userRegistrationDTO") UserRegistrationDTO userRegistrationDTO
     ) {
         return new ModelAndView("register");
     }
 
-    @PostMapping("register")
+    @PostMapping("/register")
     public ModelAndView register(
-            @ModelAttribute("userRegistrationDTO") @Valid UserRegistrationDTO userRegistrationDTO,
+            @Valid UserRegistrationDTO userRegistrationDTO,
             BindingResult bindingResult
     ) {
 

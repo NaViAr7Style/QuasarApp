@@ -1,6 +1,5 @@
 package bg.deliev.quasarapp.web;
 
-import bg.deliev.quasarapp.model.dto.GameDetailsDTO;
 import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import bg.deliev.quasarapp.service.interfaces.PublisherService;

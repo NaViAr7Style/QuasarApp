@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
     <title></title>
@@ -18,30 +19,42 @@
         </div>
         <div class="card-body">
             <!-- User Information -->
-            <div class="row">
+            <div class="row mb-5">
                 <div class="col-md-6">
                     <label class="font-weight-bold">First Name:</label>
-                    <p th:text="${user.firstName}" class="form-control-plaintext"></p>
+                    <p th:text="${user.getFirstName()}" class="form-control-plaintext"></p>
                 </div>
                 <div class="col-md-6">
                     <label class="font-weight-bold">Last Name:</label>
-                    <p th:text="${user.lastName}" class="form-control-plaintext"></p>
+                    <p th:text="${user.getLastName()}" class="form-control-plaintext"></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label class="font-weight-bold">Email:</label>
-                    <p th:text="${user.email}" class="form-control-plaintext"></p>
+                    <p th:text="${user.getEmail()}" class="form-control-plaintext"></p>
                 </div>
                 <div class="col-md-6">
-                    <label class="font-weight-bold">Roles:</label>
-                    <ul th:each="role : ${user.roles}" class="list-unstyled">
-                        <li th:text="${role.roleName}"></li>
-                    </ul>
+                    <label class="font-weight-bold">Role:</label>
+                    <p th:text="${#strings.capitalize(user.getRoles().get(0).toLowerCase())}"
+                       class="form-control-plaintext"></p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center pagination-container-wrapper fixed-bottom">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   th:href="@{/}">
+                    Home
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <div>

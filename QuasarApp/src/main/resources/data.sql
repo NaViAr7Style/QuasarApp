@@ -1,7 +1,7 @@
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
-    (1, 'admin@example.com', 'Admin', 'Adminov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (2, 'user@example.com', 'User', 'Userov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1);
+    (1, 'admin@example.com', 'AdminEntity', 'Adminov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
+    (2, 'user@example.com', 'UserEntity', 'Userov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1);
 
 INSERT INTO roles (id, role)
 VALUES

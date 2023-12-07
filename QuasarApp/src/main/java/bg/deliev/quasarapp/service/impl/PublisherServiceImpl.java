@@ -1,11 +1,13 @@
 package bg.deliev.quasarapp.service.impl;
 
+import bg.deliev.quasarapp.model.dto.AddPublisherDTO;
 import bg.deliev.quasarapp.model.dto.PublisherSummaryDTO;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.repository.PublisherRepository;
 import bg.deliev.quasarapp.service.interfaces.PublisherService;
+import jakarta.persistence.EntityExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,6 +61,19 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public String getPublisherName(long id) {
         return validatePublisher(id).getName();
+    }
+
+    @Override
+    public void addPublisher(AddPublisherDTO addPublisherDTO) {
+        Optional<PublisherEntity> byName = publisherRepository.findByName(addPublisherDTO.getName());
+
+        if (byName.isPresent()) {
+            throw new EntityExistsException("Publisher already exists!");
+        }
+
+        PublisherEntity publisherEntity = modelMapper.map(addPublisherDTO, PublisherEntity.class);
+
+        publisherRepository.save(publisherEntity);
     }
 
     private PublisherEntity validatePublisher(long id) {

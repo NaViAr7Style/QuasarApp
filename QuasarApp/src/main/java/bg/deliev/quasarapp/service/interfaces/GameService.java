@@ -1,5 +1,6 @@
 package bg.deliev.quasarapp.service.interfaces;
 
+import bg.deliev.quasarapp.model.dto.AddGameDTO;
 import bg.deliev.quasarapp.model.dto.GameDetailsDTO;
 import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
 import org.springframework.data.domain.Page;
@@ -14,4 +15,6 @@ public interface GameService {
     GameDetailsDTO getGameDetails(Long id);
 
     void deleteOffer(Long id);
+
+    void addGame(AddGameDTO addGameDTO);
 }

@@ -1,16 +1,20 @@
 package bg.deliev.quasarapp.service.impl;
 
+import bg.deliev.quasarapp.model.dto.AddGameDTO;
 import bg.deliev.quasarapp.model.dto.GameDetailsDTO;
 import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
 import bg.deliev.quasarapp.model.entity.GameEntity;
+import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.service.interfaces.GameService;
+import jakarta.persistence.EntityExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -50,5 +54,19 @@ public class GameServiceImpl implements GameService {
     @Override
     public void deleteOffer(Long id) {
         gameRepository.deleteById(id);
+    }
+
+    @Override
+    public void addGame(AddGameDTO addGameDTO) {
+
+        Optional<GameEntity> byName = gameRepository.findByName(addGameDTO.getName());
+
+        if (byName.isPresent()) {
+            throw new EntityExistsException("Game already exists!");
+        }
+
+        GameEntity gameEntity = modelMapper.map(addGameDTO, GameEntity.class);
+
+        gameRepository.save(gameEntity);
     }
 }

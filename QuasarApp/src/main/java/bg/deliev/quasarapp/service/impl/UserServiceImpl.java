@@ -1,5 +1,6 @@
 package bg.deliev.quasarapp.service.impl;
 
+import bg.deliev.quasarapp.model.dto.UserDetailsDTO;
 import bg.deliev.quasarapp.model.dto.UserRegistrationDTO;
 import bg.deliev.quasarapp.model.entity.UserEntity;
 import bg.deliev.quasarapp.model.entity.UserRoleEntity;
@@ -8,8 +9,11 @@ import bg.deliev.quasarapp.repository.RoleRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,5 +49,25 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public UserDetailsDTO findByUsername(String username) {
+        UserEntity userEntity = userRepository
+                .findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not found!"));
+
+        UserDetailsDTO userDetailsDTO = modelMapper.map(userEntity, UserDetailsDTO.class);
+
+        List<String> roles = userEntity
+                .getRoles()
+                .stream()
+                .map(roleEntity -> roleEntity.getRole().name())
+                .toList();
+
+
+        userDetailsDTO.setRoles(roles);
+
+        return userDetailsDTO;
     }
 }
