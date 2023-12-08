@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}">
+    <title></title>
+</head>
+
+<body class="text-white d-flex align-items-center justify-content-center">
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<h2 class="mt-4 mb-4">User Role Management</h2>
+
+<table class="table w-75 bg-white text-dark">
+    <thead class="thead-light">
+    <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Full name</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="userTable">
+    </tbody>
+</table>
+
+<script>
+
+    let currentUsername = "";
+
+    document.addEventListener('DOMContentLoaded', function () {
+        currentUsername = "[[${username}]]";
+        fetchAllUsers();
+    });
+
+    function fetchAllUsers() {
+
+        let userTable = document.getElementById("userTable");
+
+        userTable.innerText = '';
+
+        fetch('http://localhost:8080/api/users')
+            .then(res => res.json())
+            .then(users => users.forEach(user => {
+
+                let tr = document.createElement('tr');
+
+                let id = document.createElement('td');
+                let username = document.createElement('td');
+                let fullName = document.createElement('td');
+                let role = document.createElement('td');
+
+                id.textContent = user.id;
+                username.textContent = user.email;
+                fullName.textContent = user.firstName + ' ' + user.lastName;
+
+                if (user.roles.includes('ADMIN')) {
+                    role.textContent = 'Admin';
+                } else {
+                    role.textContent = 'User';
+                }
+
+                tr.appendChild(id);
+                tr.appendChild(username);
+                tr.appendChild(fullName);
+                tr.appendChild(role);
+
+                let actions = document.createElement('td');
+                actions.classList.add('action-buttons');
+
+                let editBtn = document.createElement('button');
+                editBtn.dataset.id = user.id;
+                editBtn.textContent = 'Edit role';
+                editBtn.classList.add('btn');
+                editBtn.classList.add('btn-info');
+                editBtn.classList.add('mr-4');
+                editBtn.addEventListener('click', editUser);
+
+                let deleteBtn = document.createElement('button');
+                deleteBtn.dataset.id = user.id;
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.classList.add('btn');
+                deleteBtn.classList.add('btn-danger');
+                deleteBtn.addEventListener('click', deleteUser);
+
+                if (user.email === currentUsername.trim()) {
+                    editBtn.disabled = true;
+                    deleteBtn.disabled = true;
+                }
+
+                actions.appendChild(editBtn);
+                actions.appendChild(deleteBtn);
+                tr.appendChild(actions);
+                userTable.appendChild(tr)
+                })
+            )
+    }
+
+    let originalRoleValue;
+
+    function editUser() {
+
+        let userId = this.dataset.id;
+
+        let tableRow = this.parentNode.parentNode;
+
+        let editButtons = document.querySelectorAll('.btn-info');
+
+        editButtons.forEach(button => {
+            button.disabled = true;
+        });
+
+
+        // Replace "Edit role" button with "Save" button
+        let saveButton = createSaveButton(userId);
+        this.parentNode.replaceChild(saveButton, this);
+
+        disableAllDeleteButtons();
+
+        // Replace "Delete" button with "Cancel" button
+        let deleteButton = tableRow.querySelector('.btn-danger');
+        let cancelButton = createCancelButton(userId);
+        deleteButton.parentNode.replaceChild(cancelButton, deleteButton);
+
+        let roleTd = tableRow.children[3];
+
+        originalRoleValue = roleTd.textContent.trim();
+
+        let roleSelect = document.createElement('select');
+
+        let adminOpt = document.createElement('option');
+
+        adminOpt.value = 'ADMIN';
+        adminOpt.textContent = 'Admin';
+        roleSelect.appendChild(adminOpt);
+
+        let userOpt = document.createElement('option');
+        userOpt.value = 'USER';
+        userOpt.textContent = 'User';
+        roleSelect.appendChild(userOpt);
+
+        let currentRole = roleTd.textContent.toUpperCase();
+        for (let i = 0; i < roleSelect.options.length; i++) {
+            if (roleSelect.options[i].value === currentRole) {
+                roleSelect.options[i].selected = true;
+                break;
+            }
+        }
+
+        roleTd.innerHTML = '';
+        roleTd.appendChild(roleSelect);
+    }
+
+    function deleteUser() {
+
+        let confirmDelete = window.confirm("Are you sure you want to delete this user?");
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        let userId = this.dataset.id;
+
+        let httpHeaders = {
+            method: 'DELETE'
+        }
+
+        fetch(`http://localhost:8080/api/users/${userId}`, httpHeaders)
+            .then(_ => fetchAllUsers())
+            .catch(_error => window.location.href = '/error');
+    }
+
+    function disableAllDeleteButtons() {
+        let deleteButtons = document.querySelectorAll('.btn-danger');
+        deleteButtons.forEach(button => {
+            button.disabled = true;
+        });
+    }
+
+    function createSaveButton(userId) {
+        let saveButton = document.createElement('button');
+        saveButton.dataset.id = userId;
+        saveButton.textContent = 'Save';
+        saveButton.classList.add('btn', 'btn-success', 'mr-4');
+        saveButton.addEventListener('click', saveUser);
+        return saveButton;
+    }
+
+    function createCancelButton(userId) {
+        let cancelButton = document.createElement('button');
+        cancelButton.dataset.id = userId;
+        cancelButton.textContent = 'Cancel';
+        cancelButton.classList.add('btn', 'btn-secondary');
+        cancelButton.addEventListener('click', cancelEdit);
+        return cancelButton;
+    }
+
+    function saveUser() {
+
+        let confirmRoleChange = window.confirm("Are you sure you want to change the role of this user?");
+
+        if (!confirmRoleChange) {
+            return;
+        }
+
+        let userId = this.dataset.id;
+
+        let tableRow = this.parentNode.parentNode;
+        let roleSelect = tableRow.querySelector('select');
+        let selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+
+        let requestBody;
+
+        if (selectedRole === 'ADMIN') {
+            requestBody = {
+                id: userId,
+                roles: [
+                    "ADMIN",
+                    "USER"
+                ]
+            };
+        } else {
+            requestBody = {
+                id: userId,
+                roles: [
+                    "USER"
+                ]
+            };
+        }
+
+        fetch('http://localhost:8080/api/users', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+            .then(_ => fetchAllUsers())
+            .catch(_error => window.location.href = '/error');
+    }
+
+    function cancelEdit() {
+
+        let tableRow = this.parentNode.parentNode;
+        let roleTd = tableRow.children[3];
+        roleTd.innerHTML = originalRoleValue;
+
+        restoreOriginalState(this.dataset.id);
+    }
+
+    function restoreOriginalState(userId) {
+        enableAllEditRoleButtons();
+        enableAllDeleteButtons();
+
+        // Replace "Save" button with "Edit role" button
+        let saveButton = document.querySelector(`button[data-id="${userId}"][class*="btn-success"]`);
+        if (saveButton) {
+            let editRoleButton = createEditRoleButton(userId);
+            saveButton.parentNode.replaceChild(editRoleButton, saveButton);
+        }
+
+        // Replace "Cancel" button with "Delete" button
+        let cancelButton = document.querySelector(`button[data-id="${userId}"][class*="btn-secondary"]`);
+        if (cancelButton) {
+            let deleteButton = createDeleteButton(userId);
+            cancelButton.parentNode.replaceChild(deleteButton, cancelButton);
+        }
+    }
+
+    function createEditRoleButton(userId) {
+        let editRoleButton = document.createElement('button');
+        editRoleButton.dataset.id = userId;
+        editRoleButton.textContent = 'Edit role';
+        editRoleButton.classList.add('btn', 'btn-info', 'mr-4');
+        editRoleButton.addEventListener('click', editUser);
+        return editRoleButton;
+    }
+
+    function createDeleteButton(userId) {
+        let deleteButton = document.createElement('button');
+        deleteButton.dataset.id = userId;
+        deleteButton.textContent = 'Delete';
+        deleteButton.classList.add('btn', 'btn-danger');
+        deleteButton.addEventListener('click', deleteUser);
+        return deleteButton;
+    }
+
+    function enableAllEditRoleButtons() {
+        let editRoleButtons = document.querySelectorAll('.btn-info');
+        editRoleButtons.forEach(button => {
+            let row = button.closest('tr');
+            if (row.querySelector('td:nth-child(2)').textContent.trim() === currentUsername.trim()) {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        });
+
+    }
+
+    function enableAllDeleteButtons() {
+        let deleteButtons = document.querySelectorAll('.btn-danger');
+        deleteButtons.forEach(button => {
+            let row = button.closest('tr');
+            if (row.querySelector('td:nth-child(2)').textContent.trim() === currentUsername.trim()) {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

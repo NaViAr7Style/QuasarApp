@@ -38,7 +38,7 @@ public class PublisherController {
 
         Page<GameSummaryDTO> publisherGames = gameService.getAllGamesByPublisherId(id, pageable);
 
-        ModelAndView modelAndView = new ModelAndView("publisher-games");
+        ModelAndView modelAndView = new ModelAndView("publisher-details");
 
         modelAndView.addObject("games", publisherGames);
         modelAndView.addObject("publisherId", id);

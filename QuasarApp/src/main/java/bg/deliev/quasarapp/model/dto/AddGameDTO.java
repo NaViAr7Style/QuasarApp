@@ -1,6 +1,5 @@
 package bg.deliev.quasarapp.model.dto;
 
-import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.model.enums.GameGenreEnum;
 import bg.deliev.quasarapp.model.validation.UniqueGameName;
 import jakarta.validation.constraints.NotEmpty;
@@ -22,7 +21,7 @@ public class AddGameDTO {
     @NotEmpty(message = "Description is required.")
     private String description;
 
-    @NotEmpty(message = "Price is required")
+    @NotNull(message = "Price is required")
     @PositiveOrZero(message = "Price cannot be negative.")
     private BigDecimal price;
 
@@ -32,6 +31,6 @@ public class AddGameDTO {
     @NotEmpty(message = "Thumbnail is required.")
     private String thumbnailUrl;
 
-    @NotNull(message = "Publisher is required.")
-    private PublisherEntity publisherName;
+    @NotEmpty(message = "Publisher is required.")
+    private String publisherName;
 }

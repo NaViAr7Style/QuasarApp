@@ -47,7 +47,7 @@
                         <a class="dropdown-item" th:href="@{/publishers/add}">Add a publisher</a>
                         <a class="dropdown-item" th:href="@{/games/add}">Add a game</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/">Manage roles</a>
+                        <a class="dropdown-item" th:href="@{/users/manage-roles}">Manage roles</a>
                     </div>
                 </li>
             </ul>
@@ -63,8 +63,7 @@
                        aria-haspopup="true"
                        aria-expanded="false">
                         Welcome,
-                        <th:block sec:authentication="name"></th:block>
-                        !
+                        <th:block sec:authentication="name"></th:block>!
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>

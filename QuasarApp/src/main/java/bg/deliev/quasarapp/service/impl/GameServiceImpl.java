@@ -6,6 +6,7 @@ import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
+import bg.deliev.quasarapp.repository.PublisherRepository;
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import jakarta.persistence.EntityExistsException;
 import org.modelmapper.ModelMapper;
@@ -21,10 +22,14 @@ public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
     private final ModelMapper modelMapper;
+    private final PublisherRepository publisherRepository;
 
-    public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper) {
+    public GameServiceImpl(GameRepository gameRepository,
+                           ModelMapper modelMapper,
+                           PublisherRepository publisherRepository) {
         this.gameRepository = gameRepository;
         this.modelMapper = modelMapper;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -66,6 +71,18 @@ public class GameServiceImpl implements GameService {
         }
 
         GameEntity gameEntity = modelMapper.map(addGameDTO, GameEntity.class);
+
+        PublisherEntity publisherEntity = publisherRepository
+                .findByName(addGameDTO.getPublisherName())
+                .orElseThrow(
+                        () -> new NoSuchElementException(
+                                "Publisher " +
+                                addGameDTO.getPublisherName() +
+                                " not found"
+                        )
+                );
+
+        gameEntity.setPublisher(publisherEntity);
 
         gameRepository.save(gameEntity);
     }

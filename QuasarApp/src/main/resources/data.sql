@@ -1,7 +1,10 @@
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
     (1, 'admin@example.com', 'AdminEntity', 'Adminov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (2, 'user@example.com', 'UserEntity', 'Userov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1);
+    (2, 'user@example.com', 'UserEntity', 'Userov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
+    (3, 'test1@example.com', 'Test1', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
+    (4, 'test2@example.com', 'Test2', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
+    (5, 'test3@example.com', 'Test3', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1);
 
 INSERT INTO roles (id, role)
 VALUES
@@ -12,7 +15,10 @@ INSERT INTO users_roles (user_id, role_id)
 VALUES
     (1, 1),
     (1, 2),
-    (2, 2);
+    (2, 2),
+    (3, 2),
+    (4, 2),
+    (5, 2);
 
 INSERT INTO publishers (id, name, thumbnail_url)
 VALUES

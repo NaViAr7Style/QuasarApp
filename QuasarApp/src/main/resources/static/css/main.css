@@ -13,7 +13,6 @@ body {
     flex-direction: column;
     padding-top: 100px;
     overflow-x: auto;
-
 }
 
 .container-fluid {
@@ -24,7 +23,8 @@ body {
 
 .game-details-container,
 .pagination-container-wrapper,
-.contact-form-submit-btn {
+.contact-form-submit-btn,
+.add-game-submit-btn {
     margin-bottom: 6rem;
 }
 
@@ -92,7 +92,6 @@ button.navbar-toggler[aria-expanded="true"] {
 }
 
 .faq-container {
-    margin-top: 140px;
     max-width: 600px;
     text-align: center;
     background-color: #fff;
@@ -125,4 +124,16 @@ button.navbar-toggler[aria-expanded="true"] {
 
 .empty-content-container {
     font-size: 24px;
+}
+
+tr > * {
+    text-align: center;
+}
+
+.bottom-left {
+    position: fixed;
+    bottom: 4rem;
+    left: 10rem;
+    max-width: 25vw;
+    max-height: 25vh;
 }

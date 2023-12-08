@@ -76,6 +76,17 @@ public class PublisherServiceImpl implements PublisherService {
         publisherRepository.save(publisherEntity);
     }
 
+    @Override
+    public List<PublisherSummaryDTO> getAll() {
+
+        List<PublisherEntity> entities = publisherRepository.findAll();
+
+        return entities
+                .stream()
+                .map(e -> modelMapper.map(e, PublisherSummaryDTO.class))
+                .toList();
+    }
+
     private PublisherEntity validatePublisher(long id) {
         Optional<PublisherEntity> optPublisher = publisherRepository.findById(id);
 

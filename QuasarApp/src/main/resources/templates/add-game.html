@@ -70,9 +70,10 @@
                     th:name="genre"
                     class="form-control"
                     th:field="*{genre}">
-                <option th:each="genre : ${T(bg.deliev.quasarapp.model.enums.GameGenreEnum).values()}"
+                <option value="" selected>Select a genre</option>
+                <option th:each="genre : ${genres}"
                         th:value="${genre}"
-                        th:text="${genre}">
+                        th:text=" ${#strings.capitalize(genre.toLowerCase())}">
                 </option>
             </select>
             <p th:if="${#fields.hasErrors('genre')}"
@@ -100,15 +101,25 @@
         <!-- Publisher Input -->
         <div class="form-group">
             <label for="publisherName">Publisher:</label>
-            <input type="text"
-                   id="publisherName"
-                   th:name="publisherName"
-                   class="form-control"
-                   th:field="*{publisherName.name}"/>
+            <select id="publisherName"
+                    th:name="publisherName"
+                    class="form-control"
+                    th:field="*{publisherName}">
+                <option value="" selected>Select a game publisher</option>
+                <option th:each="publisher : ${publishers}"
+                        th:value="${publisher}"
+                        th:text=" ${publisher}">
+                </option>
+            </select>
+            <p th:if="${#fields.hasErrors('publisherName')}"
+               th:errors="*{publisherName}"
+               class="errors alert alert-danger">
+                Publisher is required.
+            </p>
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary mt-4">Add Game</button>
+        <button type="submit" class="btn btn-primary mt-4 add-game-submit-btn">Add Game</button>
     </form>
 </div>
 

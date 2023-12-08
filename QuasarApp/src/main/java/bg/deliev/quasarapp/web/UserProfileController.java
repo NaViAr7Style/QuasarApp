@@ -21,7 +21,11 @@ public class UserProfileController {
     @GetMapping("/user/profile")
     public ModelAndView userProfile(@AuthenticationPrincipal UserDetails user) {
 
-        UserDetailsDTO currentUser = userService.findByUsername(user.getUsername());
+        UserDetailsDTO currentUser = null;
+
+        if (user.getUsername() != null) {
+            currentUser = userService.findByUsername(user.getUsername());
+        }
 
         ModelAndView modelAndView = new ModelAndView("user-profile");
 

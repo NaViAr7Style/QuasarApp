@@ -6,17 +6,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     private final String rememberMeKey;
 
-    public SecurityConfiguration(@Value("${quasar.remember.me.key}") String rememberMeKey) {
+    public SecurityConfig(@Value("${quasar.remember.me.key}") String rememberMeKey) {
         this.rememberMeKey = rememberMeKey;
     }
 
@@ -24,6 +25,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         // TODO: Update request authorization
         return httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers("/").permitAll()
@@ -46,8 +48,7 @@ public class SecurityConfiguration {
                                 .rememberMeParameter("rememberme")
                                 .rememberMeCookieName("rememberme")
                                 .tokenValiditySeconds(1800)
-                )
-                .build();
+                ).build();
     }
 
     @Bean

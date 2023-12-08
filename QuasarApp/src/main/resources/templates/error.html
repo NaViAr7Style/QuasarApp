@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}">
+    <title></title>
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+
+<div class="container mt-3 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="text-center">Oops, something went very wrong!</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">
+                        Don't worry we have dispatched a team of highly trained monkeys to take care of the problem!
+                        In the meantime, have a banana!
+                    </p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a th:href="@{/}" class="btn btn-warning align-items-center mb-4">Banana</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <img src="/images/space-monkey.jpg" alt="Monkey Image" class="img-fluid mt-3 mb-5 bottom-left">
+</div>
+
+<div>
+    <footer th:replace="~{/fragments/footer}"> </footer>
+</div>
+
+</body>
+
+</html>

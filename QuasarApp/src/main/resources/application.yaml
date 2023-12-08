@@ -22,3 +22,10 @@ spring:
 
 quasar:
   remember.me.key: ${REMEMBER_ME_KEY}
+
+mail:
+  quasar: "info@quasargames.com"
+  host: localhost
+  port: 1025
+  username: ${MAIL_USER:quasar}
+  password: ${MAIL_PASSWORD:quasar}
