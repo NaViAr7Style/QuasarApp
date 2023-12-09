@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web;
+package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.service.authentication.QuasarUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

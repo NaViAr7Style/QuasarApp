@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web;
+package bg.deliev.quasarapp.web.controller;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

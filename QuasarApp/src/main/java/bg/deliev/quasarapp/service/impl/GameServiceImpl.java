@@ -7,6 +7,7 @@ import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.repository.PublisherRepository;
+import bg.deliev.quasarapp.service.aop.WarnIfExecutionExceeds;
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import jakarta.persistence.EntityExistsException;
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,7 @@ public class GameServiceImpl implements GameService {
         this.publisherRepository = publisherRepository;
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
     @Override
     public Page<GameSummaryDTO> getAllGames(Pageable pageable) {
         return gameRepository
@@ -39,6 +41,7 @@ public class GameServiceImpl implements GameService {
                 .map(gameEntity -> modelMapper.map(gameEntity, GameSummaryDTO.class));
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
     @Override
     public Page<GameSummaryDTO> getAllGamesByPublisherId(long publisherId, Pageable pageable) {
         return gameRepository

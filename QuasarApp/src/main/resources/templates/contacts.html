@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/head}">
     <title></title>
@@ -12,26 +13,54 @@
 </div>
 
 <div class="container mt-5">
-
-    <!--    TODO: Capture post request-->
     <h1 class="mb-4">Contact Us</h1>
-
     <p>Have questions, suggestions, or just want to say hello? We'd love to hear from you!</p>
-
     <div class="row">
         <div class="col-md-6">
-            <form>
+            <form th:action="@{/contacts}"
+                  th:method="POST"
+                  th:object="${contactUsDTO}">
                 <div class="form-group">
                     <label for="name" class="text-white">Your Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                    <input type="text"
+                           class="form-control"
+                           id="name"
+                           th:name="name"
+                           th:field="*{name}"
+                           placeholder="Enter your name">
+                    <p th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}"
+                       class="errors alert alert-danger">
+                        Name is required.
+                    </p>
                 </div>
                 <div class="form-group">
                     <label for="email" class="text-white">Email Address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <input class="form-control"
+                           id="email"
+                           th:name="email"
+                           th:field="*{email}"
+                           placeholder="Enter your email">
+                    <p th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"
+                       class="errors alert alert-danger">
+                        Email is required.
+                    </p>
                 </div>
                 <div class="form-group">
                     <label for="message" class="text-white">Your Message</label>
-                    <textarea class="form-control" id="message" rows="4" placeholder="Type your message"></textarea>
+                    <textarea class="form-control"
+                              id="message"
+                              th:name="message"
+                              th:field="*{message}"
+                              rows="4"
+                              placeholder="Type your message">
+                    </textarea>
+                    <p th:if="${#fields.hasErrors('message')}"
+                       th:errors="*{message}"
+                       class="errors alert alert-danger">
+                        Message is required.
+                    </p>
                 </div>
                 <button type="submit" class="contact-form-submit-btn btn btn-primary mt-4">Submit</button>
             </form>

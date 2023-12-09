@@ -48,7 +48,11 @@ public class UserActivationServiceImpl implements UserActivationService {
 
     @Override
     public void activationLinkCleanUp() {
-        // TODO: Implement a scheduled event
+        Instant cutOffTime = Instant.now().minusSeconds(24 * 60 * 60);
+        List<UserActivationCodeEntity> oldActivationCodes = userActivationCodeRepository
+                .findAllByCreatedBefore(cutOffTime);
+
+        userActivationCodeRepository.deleteAll(oldActivationCodes);
     }
 
     @Override
@@ -66,16 +70,6 @@ public class UserActivationServiceImpl implements UserActivationService {
         userActivationCodeRepository.save(userActivationCodeEntity);
 
         return userActivationCodeEntity.getActivationCode();
-    }
-
-    @Override
-    public void cleanUpObsoleteActivationLinks() {
-        Instant cutOffTime = Instant.now().minusSeconds(24 * 60 * 60);
-        List<UserActivationCodeEntity> oldActivationCodes = userActivationCodeRepository
-                .findAllByCreatedBefore(cutOffTime);
-
-
-        userActivationCodeRepository.deleteAll(oldActivationCodes);
     }
 
     private static String generateActivationCode() {

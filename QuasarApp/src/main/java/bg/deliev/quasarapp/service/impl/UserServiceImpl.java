@@ -12,6 +12,7 @@ import bg.deliev.quasarapp.model.events.UserRegisteredEvent;
 import bg.deliev.quasarapp.repository.RoleRepository;
 import bg.deliev.quasarapp.repository.UserActivationCodeRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
+import bg.deliev.quasarapp.service.aop.WarnIfExecutionExceeds;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService {
         return userDetailsDTO;
     }
 
-
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
     @Override
     public List<UserManagementDTO> getAllUsers() {
 

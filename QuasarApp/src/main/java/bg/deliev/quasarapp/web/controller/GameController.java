@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web;
+package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.model.dto.GameDetailsDTO;
 import bg.deliev.quasarapp.service.interfaces.GameService;

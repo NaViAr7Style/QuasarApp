@@ -1,5 +1,6 @@
 package bg.deliev.quasarapp.service.impl;
 
+import bg.deliev.quasarapp.model.dto.ContactUsDTO;
 import bg.deliev.quasarapp.service.interfaces.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -44,6 +45,43 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void sendFeedbackEmail(ContactUsDTO contactUsDTO) {
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+
+        try {
+            String senderName = contactUsDTO.getName();
+
+            mimeMessageHelper.setTo(quasarEmail);
+            mimeMessageHelper.setFrom(senderName);
+            mimeMessageHelper.setReplyTo(senderName);
+            mimeMessageHelper.setSubject("Contact us form - feedback");
+            mimeMessageHelper.setText(
+                    generateContactUsEmailBody(contactUsDTO.getName(), contactUsDTO.getMessage()),
+                    true
+            );
+
+            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private String generateContactUsEmailBody(String userFullName,String message) {
+
+        Context context = new Context();
+
+        context.setVariable("userFullName", userFullName);
+        context.setVariable("message", message);
+
+        return templateEngine.process("/email/contact-us-email", context);
+    }
+
 
     private String generateRegistrationEmailBody(String userFullName, String activationCode) {
 

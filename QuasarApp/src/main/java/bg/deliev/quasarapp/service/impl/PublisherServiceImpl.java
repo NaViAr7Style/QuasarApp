@@ -6,6 +6,7 @@ import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.repository.PublisherRepository;
+import bg.deliev.quasarapp.service.aop.WarnIfExecutionExceeds;
 import bg.deliev.quasarapp.service.interfaces.PublisherService;
 import jakarta.persistence.EntityExistsException;
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,7 @@ public class PublisherServiceImpl implements PublisherService {
         this.gameRepository = gameRepository;
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
     @Override
     public Page<PublisherSummaryDTO> getAllPublishers(Pageable pageable) {
         return publisherRepository
@@ -76,6 +78,7 @@ public class PublisherServiceImpl implements PublisherService {
         publisherRepository.save(publisherEntity);
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
     @Override
     public List<PublisherSummaryDTO> getAll() {
 

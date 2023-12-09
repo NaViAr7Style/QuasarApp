@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web;
+package bg.deliev.quasarapp.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +15,6 @@ public class HomeController {
     @GetMapping("/about")
     public ModelAndView about() {
         return new ModelAndView("about");
-    }
-
-    @GetMapping("/contacts")
-    public ModelAndView contacts() {
-        return new ModelAndView("contacts");
     }
 
 }

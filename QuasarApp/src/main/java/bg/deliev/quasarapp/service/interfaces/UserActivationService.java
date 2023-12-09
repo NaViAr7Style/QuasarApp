@@ -9,6 +9,4 @@ public interface UserActivationService {
     void activationLinkCleanUp();
 
     String createActivationCode(String userEmail);
-
-    void cleanUpObsoleteActivationLinks();
 }

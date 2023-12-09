@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web;
+package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.model.dto.AddPublisherDTO;
 import bg.deliev.quasarapp.model.dto.PublisherSummaryDTO;

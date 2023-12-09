@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/quasar_gameshop_app?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://${MYSQL_HOST}:3306/quasar_gameshop_app?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
@@ -25,7 +25,7 @@ quasar:
 
 mail:
   quasar: "info@quasargames.com"
-  host: localhost
-  port: 1025
-  username: ${MAIL_USER:quasar}
-  password: ${MAIL_PASSWORD:quasar}
+  host: ${SMTP_HOST}
+  port: ${SMTP_PORT}
+  username: ${MAIL_USER}
+  password: ${MAIL_PASSWORD}
