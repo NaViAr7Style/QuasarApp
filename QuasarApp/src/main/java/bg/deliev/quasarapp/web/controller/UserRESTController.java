@@ -4,6 +4,7 @@ import bg.deliev.quasarapp.model.dto.UpdateUserRolesDTO;
 import bg.deliev.quasarapp.model.dto.UserManagementDTO;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserRESTController {
 
     private final UserService userService;
@@ -22,15 +24,6 @@ public class UserRESTController {
     @GetMapping
     public ResponseEntity<List<UserManagementDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserManagementDTO> findUserById(@PathVariable("id") Long id) {
-        Optional<UserManagementDTO> optUserDTO = userService.findUserById(id);
-
-        return optUserDTO
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

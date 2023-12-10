@@ -1,7 +1,8 @@
 package bg.deliev.quasarapp.web.controller;
 
-import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.interfaces.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,9 +32,14 @@ public class AuthenticationController {
     }
 
     @GetMapping("/activate")
-    public ModelAndView verifyUser(@RequestParam("activation_code") String activationCode) {
+    public ModelAndView verifyUser(@RequestParam("activation_code") String activationCode,
+                                   @AuthenticationPrincipal UserDetails userDetails) {
 
         userService.verifyUser(activationCode);
+
+        if (userDetails.getUsername() != null) {
+            return new ModelAndView("redirect:/");
+        }
 
         return new ModelAndView("login");
     }

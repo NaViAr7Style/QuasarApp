@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,12 +38,14 @@ public class AllPublishersController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add")
     public ModelAndView add(@ModelAttribute("addPublisherDTO") AddPublisherDTO addPublisherDTO) {
 
         return new ModelAndView("add-publisher");
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ModelAndView add(@Valid AddPublisherDTO addPublisherDTO,
                                      BindingResult bindingResult) {

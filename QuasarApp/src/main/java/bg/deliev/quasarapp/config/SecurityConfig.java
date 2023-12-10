@@ -1,8 +1,10 @@
 package bg.deliev.quasarapp.config;
 
+import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.authentication.QuasarUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,13 +25,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        // TODO: Update request authorization
         return httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
-                                .requestMatchers("/").permitAll()
-                                .anyRequest().permitAll()
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                // Allow anyone to see the home page, login and register pages
+                                .requestMatchers("/", "/users/register", "/users/activate").permitAll()
+                                .requestMatchers("/users/login", "/users/login-error").permitAll()
+                                .requestMatchers("/games/all", "/game/**").permitAll()
+                                .requestMatchers("/publishers/all", "/publisher/**").permitAll()
+                                .requestMatchers("/contacts", "/faq", "/about").permitAll()
+                                .requestMatchers("/user/profile").authenticated()
+                                .anyRequest().hasRole(UserRoleEnum.ADMIN.name())
                 ).formLogin(
                         formLogin -> formLogin
                                 .loginPage("/users/login")
@@ -48,6 +55,8 @@ public class SecurityConfig {
                                 .rememberMeParameter("rememberme")
                                 .rememberMeCookieName("rememberme")
                                 .tokenValiditySeconds(1800)
+                ).csrf(
+                        csrf -> csrf.ignoringRequestMatchers("/api/users/**")
                 ).build();
     }
 

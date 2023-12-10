@@ -58,11 +58,7 @@
                 username.textContent = user.email;
                 fullName.textContent = user.firstName + ' ' + user.lastName;
 
-                if (user.roles.includes('ADMIN')) {
-                    role.textContent = 'Admin';
-                } else {
-                    role.textContent = 'User';
-                }
+                role.textContent = user.roles.includes('ADMIN') ? 'Admin' : 'User';
 
                 tr.appendChild(id);
                 tr.appendChild(username);

@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(userEntity);
 
-        userRepository.deleteById(id);
+        userRepository.delete(userEntity);
     }
 
     @Override
