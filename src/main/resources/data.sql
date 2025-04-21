@@ -1,10 +1,10 @@
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
-    (1, 'admin@example.com', 'AdminEntity', 'Adminov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (2, 'user@example.com', 'UserEntity', 'Userov', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (3, 'test1@example.com', 'Test1', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (4, 'test2@example.com', 'Test2', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1),
-    (5, 'test3@example.com', 'Test3', 'Test', '1593e567b7a290d26a56ac5d8cfffecfb4e9aed82be3ec03de31e2c4edaf39502e5d940a6c5e9bc1582019422bf8a9f7', 1);
+    (1, 'admin@example.com', 'AdminEntity', 'Adminov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
+    (2, 'user@example.com', 'UserEntity', 'Userov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
+    (3, 'test1@example.com', 'Test1', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
+    (4, 'test2@example.com', 'Test2', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
+    (5, 'test3@example.com', 'Test3', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1);
 
 INSERT INTO roles (id, role)
 VALUES

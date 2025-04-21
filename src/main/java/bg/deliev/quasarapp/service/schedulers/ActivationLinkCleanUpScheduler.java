@@ -14,7 +14,6 @@ public class ActivationLinkCleanUpScheduler {
     }
 
     @Scheduled(cron = "0 0 2 * * ?")
-//    @Scheduled(cron = "0 * * * * *")
     public void cleanUp() {
         userActivationService.activationLinkCleanUp();
     }

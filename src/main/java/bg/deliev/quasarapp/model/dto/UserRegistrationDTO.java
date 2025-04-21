@@ -39,8 +39,4 @@ public class UserRegistrationDTO {
 
     @NotEmpty(message = "Confirming password is required")
     private String confirmPassword;
-
-    public String fullName() {
-        return firstName + " " + lastName;
-    }
 }

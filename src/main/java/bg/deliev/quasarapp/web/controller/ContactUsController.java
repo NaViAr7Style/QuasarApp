@@ -26,17 +26,17 @@ public class ContactUsController {
         return new ModelAndView("contacts");
     }
 
-    @PostMapping
-    public ModelAndView contacts(@Valid ContactUsDTO contactUsDTO,
-                                 BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView("contacts");
-        }
-
-        emailService.sendFeedbackEmail(contactUsDTO);
-
-        return new ModelAndView("redirect:/");
-    }
+//    @PostMapping
+//    public ModelAndView contacts(@Valid ContactUsDTO contactUsDTO,
+//                                 BindingResult bindingResult) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return new ModelAndView("contacts");
+//        }
+//
+//        emailService.sendFeedbackEmail(contactUsDTO);
+//
+//        return new ModelAndView("redirect:/");
+//    }
 
 }

@@ -22,8 +22,6 @@ public class MatchesPatternValidator implements ConstraintValidator<MatchesPatte
 
         Matcher matcher = pattern.matcher(value);
 
-        boolean is = matcher.matches();
-
         return matcher.matches();
     }
 }

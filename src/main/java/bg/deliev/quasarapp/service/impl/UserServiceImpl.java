@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
     public boolean registerUser(UserRegistrationDTO userRegistrationDTO) {
         UserEntity user = modelMapper.map(userRegistrationDTO, UserEntity.class);
         user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
+        user.setActive(true);
 
         try {
             UserRoleEntity userRole = roleRepository.getByRole(UserRoleEnum.USER);
@@ -59,13 +60,16 @@ public class UserServiceImpl implements UserService {
 
             userRepository.save(user);
 
-            appEventPublisher.publishEvent(
-                    new UserRegisteredEvent(
-                            "UserService",
-                            userRegistrationDTO.getEmail(),
-                            userRegistrationDTO.fullName()
-                    )
-            );
+//          The event is not published to avoid the need for an SMTP server and configuration
+//          for hosting and portfolio purposes.
+
+//            appEventPublisher.publishEvent(
+//                    new UserRegisteredEvent(
+//                            "UserService",
+//                            userRegistrationDTO.getEmail(),
+//                            userRegistrationDTO.fullName()
+//                    )
+//            );
 
             return true;
         } catch (Exception e) {

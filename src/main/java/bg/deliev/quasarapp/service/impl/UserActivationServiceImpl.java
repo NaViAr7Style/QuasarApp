@@ -7,14 +7,13 @@ import bg.deliev.quasarapp.repository.UserActivationCodeRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.interfaces.EmailService;
 import bg.deliev.quasarapp.service.interfaces.UserActivationService;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 @Service
@@ -61,7 +60,7 @@ public class UserActivationServiceImpl implements UserActivationService {
 
         UserEntity user = userRepository
                 .findByEmail(userEmail)
-                .orElseThrow(() -> new NoSuchElementException("User not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
 
         userActivationCodeEntity.setActivationCode(generateActivationCode());
         userActivationCodeEntity.setCreated(Instant.now());
