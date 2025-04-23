@@ -60,13 +60,15 @@ public class PublisherController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{id}/games")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+//    Not implemented. TODO
 
-        publisherService.deletePublisher(id);
-
-        return new ModelAndView("redirect:/publishers/all");
-    }
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @DeleteMapping("/{id}")
+//    public ModelAndView delete(@PathVariable("id") Long id) {
+//
+//        publisherService.deletePublisher(id);
+//
+//        return new ModelAndView("redirect:/publishers/all");
+//    }
 
 }

@@ -1,7 +1,6 @@
 package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.model.dto.UserDetailsDTO;
-import bg.deliev.quasarapp.model.entity.UserEntity;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

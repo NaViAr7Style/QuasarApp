@@ -58,5 +58,4 @@ public class AllPublishersController {
 
         return new ModelAndView("redirect:/publishers/all");
     }
-
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,12 +29,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests -> authorizeRequests
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                // Allow anyone to see the home page, login and register pages
-                                .requestMatchers("/", "/users/register", "/users/activate").permitAll()
-                                .requestMatchers("/users/login", "/users/login-error").permitAll()
-                                .requestMatchers("/games/all", "/game/**").permitAll()
-                                .requestMatchers("/publishers/all", "/publisher/**").permitAll()
-                                .requestMatchers("/contacts", "/faq", "/about").permitAll()
+                                .requestMatchers("/", "/users/register", "/users/activate",
+                                    "/users/login", "/users/login-error", "/games/all",
+                                    "/publishers/all", "/contacts", "/faq",
+                                    "/about").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/game/**", "/publisher/**").permitAll()
+                                .requestMatchers(
+                                    HttpMethod.DELETE,
+                                    "/game/**", "/publisher/**").hasRole(UserRoleEnum.ADMIN.name())
                                 .requestMatchers("/user/profile").authenticated()
                                 .anyRequest().hasRole(UserRoleEnum.ADMIN.name())
                 ).formLogin(

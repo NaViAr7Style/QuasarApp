@@ -18,7 +18,7 @@ public class DBInit implements CommandLineRunner {
     private RoleRepository roleRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         if (roleRepository.count() != 0) {
             return;

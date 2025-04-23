@@ -31,18 +31,18 @@ public class AuthenticationController {
         return modelAndView;
     }
 
-    @GetMapping("/activate")
-    public ModelAndView verifyUser(@RequestParam("activation_code") String activationCode,
-                                   @AuthenticationPrincipal UserDetails userDetails) {
+//    Unnecessary after the removal of account activation
 
-        userService.verifyUser(activationCode);
-
-        if (userDetails.getUsername() != null) {
-            return new ModelAndView("redirect:/");
-        }
-
-        return new ModelAndView("login");
-    }
-
-
+//    @GetMapping("/activate")
+//    public ModelAndView verifyUser(@RequestParam("activation_code") String activationCode,
+//                                   @AuthenticationPrincipal UserDetails userDetails) {
+//
+//        userService.verifyUser(activationCode);
+//
+//        if (userDetails.getUsername() != null) {
+//            return new ModelAndView("redirect:/");
+//        }
+//
+//        return new ModelAndView("login");
+//    }
 }

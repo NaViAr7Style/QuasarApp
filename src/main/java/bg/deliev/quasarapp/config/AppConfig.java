@@ -15,7 +15,6 @@ public class AppConfig implements WebMvcConfigurer {
         return new ModelMapper();
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoggingInterceptor())

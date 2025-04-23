@@ -3,12 +3,8 @@ package bg.deliev.quasarapp.testUtils;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.model.enums.GameGenreEnum;
-import bg.deliev.quasarapp.model.validation.UniqueGameName;
 import bg.deliev.quasarapp.repository.GameRepository;
 import bg.deliev.quasarapp.repository.PublisherRepository;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
