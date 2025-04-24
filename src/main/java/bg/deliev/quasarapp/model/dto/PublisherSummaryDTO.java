@@ -10,5 +10,4 @@ public class PublisherSummaryDTO {
     private long id;
     private String name;
     private String thumbnailUrl;
-
 }

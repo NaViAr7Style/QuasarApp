@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.model.events;
+package bg.deliev.quasarapp.model.event;
 
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

@@ -2,7 +2,7 @@ package bg.deliev.quasarapp.service.impl;
 
 import bg.deliev.quasarapp.model.entity.UserActivationCodeEntity;
 import bg.deliev.quasarapp.model.entity.UserEntity;
-import bg.deliev.quasarapp.model.events.UserRegisteredEvent;
+import bg.deliev.quasarapp.model.event.UserRegisteredEvent;
 import bg.deliev.quasarapp.repository.UserActivationCodeRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.interfaces.EmailService;

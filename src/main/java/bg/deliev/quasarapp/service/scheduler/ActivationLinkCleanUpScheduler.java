@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.service.schedulers;
+package bg.deliev.quasarapp.service.scheduler;
 
 import bg.deliev.quasarapp.service.interfaces.UserActivationService;
 import org.springframework.scheduling.annotation.Scheduled;

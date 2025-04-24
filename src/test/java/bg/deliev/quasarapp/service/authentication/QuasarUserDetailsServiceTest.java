@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-import static bg.deliev.quasarapp.testUtils.TestUserUtil.*;
+import static bg.deliev.quasarapp.testUtils.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -43,7 +43,7 @@ class QuasarUserDetailsServiceTest {
     @Test
     void testLoadUserByUsername_UserFound_ReturnsCorrectUserDetails() {
         // Arrange
-        UserEntity testUser = createTestUser();
+        UserEntity testUser = createValidUser();
 
         when(mockUserRepository.findByEmail(testUser.getEmail()))
                 .thenReturn(Optional.of(testUser));
@@ -55,15 +55,7 @@ class QuasarUserDetailsServiceTest {
         assertNotNull(userDetails);
         assertEquals(testUser.getEmail(), userDetails.getUsername(), "Username is not mapped to email.");
         assertEquals(testUser.getPassword(), userDetails.getPassword());
-        assertEquals(2, userDetails.getAuthorities().size());
-
-        assertTrue(
-                containsAuthority(
-                        userDetails,
-                        "ROLE_" + UserRoleEnum.ADMIN
-                ),
-                "The user is not admin"
-        );
+        assertEquals(1, userDetails.getAuthorities().size());
 
         assertTrue(
                 containsAuthority(
@@ -78,7 +70,7 @@ class QuasarUserDetailsServiceTest {
     @Test
     void testLoadUserByUsername_UserFound_NoRoles() {
         // Arrange
-        UserEntity testUser = createTestUserWithoutRoles();
+        UserEntity testUser = createValidUserWithoutRoles();
 
         when(mockUserRepository.findByEmail(testUser.getEmail()))
             .thenReturn(Optional.of(testUser));

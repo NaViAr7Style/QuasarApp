@@ -1,6 +1,6 @@
 package bg.deliev.quasarapp.service.interfaces;
 
-import bg.deliev.quasarapp.model.events.UserRegisteredEvent;
+import bg.deliev.quasarapp.model.event.UserRegisteredEvent;
 
 public interface UserActivationService {
 

@@ -2,6 +2,7 @@ package bg.deliev.quasarapp.model.entity;
 
 import bg.deliev.quasarapp.model.enums.GameGenreEnum;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @Setter
 public class GameEntity extends BaseEntity {
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String name;
 

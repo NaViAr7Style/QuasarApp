@@ -8,7 +8,6 @@ import bg.deliev.quasarapp.model.entity.UserActivationCodeEntity;
 import bg.deliev.quasarapp.model.entity.UserEntity;
 import bg.deliev.quasarapp.model.entity.UserRoleEntity;
 import bg.deliev.quasarapp.model.enums.UserRoleEnum;
-import bg.deliev.quasarapp.model.events.UserRegisteredEvent;
 import bg.deliev.quasarapp.repository.RoleRepository;
 import bg.deliev.quasarapp.repository.UserActivationCodeRepository;
 import bg.deliev.quasarapp.repository.UserRepository;

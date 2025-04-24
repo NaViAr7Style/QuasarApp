@@ -16,5 +16,4 @@ public class GameSummaryDTO {
     private GameGenreEnum genre;
     private String thumbnailUrl;
     private String publisherName;
-
 }
