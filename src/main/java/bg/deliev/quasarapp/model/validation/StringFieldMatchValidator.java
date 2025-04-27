@@ -23,19 +23,27 @@ public class StringFieldMatchValidator implements ConstraintValidator<StringFiel
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
 
+        if (value == null) {
+            return false;
+        }
+
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
 
         Object firstProperty = beanWrapper.getPropertyValue(this.first);
         Object secondProperty = beanWrapper.getPropertyValue(this.second);
 
+        if (firstProperty == null || secondProperty == null) {
+            return false;
+        }
+
         boolean isValid = Objects.equals(firstProperty, secondProperty);
 
         if (!isValid) {
+            context.disableDefaultConstraintViolation();
             context
                     .buildConstraintViolationWithTemplate(message)
                     .addPropertyNode(second)
-                    .addConstraintViolation()
-                    .disableDefaultConstraintViolation();
+                    .addConstraintViolation();
         }
 
         return isValid;

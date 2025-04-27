@@ -15,5 +15,4 @@ public class UserRegisteredEvent extends ApplicationEvent {
         this.userEmail = userEmail;
         this.userFullName = userFullName;
     }
-
 }

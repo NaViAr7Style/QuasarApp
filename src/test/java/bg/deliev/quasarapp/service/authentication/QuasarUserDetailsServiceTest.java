@@ -3,9 +3,9 @@ package bg.deliev.quasarapp.service.authentication;
 import bg.deliev.quasarapp.model.entity.UserEntity;
 import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import bg.deliev.quasarapp.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,15 +21,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class QuasarUserDetailsServiceTest {
 
-    private QuasarUserDetailsService serviceToTest;
-
     @Mock
     private UserRepository mockUserRepository;
 
-    @BeforeEach
-    void setUp() {
-        serviceToTest = new QuasarUserDetailsService(mockUserRepository);
-    }
+    @InjectMocks
+    private QuasarUserDetailsService serviceToTest;
 
     @Test
     void testLoadUserByUsernameUserNotFound() {

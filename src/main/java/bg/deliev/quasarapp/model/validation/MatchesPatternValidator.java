@@ -18,6 +18,10 @@ public class MatchesPatternValidator implements ConstraintValidator<MatchesPatte
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
+        if (value == null) {
+            return false;
+        }
+
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher = pattern.matcher(value);

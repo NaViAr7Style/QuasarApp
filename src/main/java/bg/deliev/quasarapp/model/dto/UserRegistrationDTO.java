@@ -26,7 +26,7 @@ public class UserRegistrationDTO {
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Please use a legitimate email address")
-    @UniqueUserEmail(message = "Email already in use")
+    @UniqueUserEmail(message = "Empty email or already in use")
     private String email;
 
     @NotEmpty(message = "Password is required")
