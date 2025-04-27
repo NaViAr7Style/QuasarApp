@@ -23,11 +23,11 @@ VALUES
 INSERT INTO publishers (id, name, thumbnail_url)
 VALUES
     (1, 'Blizzard', 'https://www.warcrafttavern.com/wp-content/uploads/2021/05/activision-blizzard-layoffs_feature.jpg'),
-    (2, 'Riot Games', 'https://stuff.co.za/wp-content/uploads/2021/09/riot-logo.jpg'),
+    (2, 'Riot Games', 'https://images.squarespace-cdn.com/content/v1/5685f0f7df40f3987cbb0419/1576192829046-Y890V52DFNBZ568580E8/Ignite_Frame_9_v1_comp.png?format=2500w'),
     (3, 'Ubisoft', 'https://i.vimeocdn.com/video/901255563-85edf3a00d320073f4d5692c466afd214fabe6f2c036f2164082943a6dbc1033-d?f=webp'),
     (4, 'Bethesda', 'https://images5.alphacoders.com/428/428578.png'),
-    (5, 'Warner', 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/8616c967-ff6d-40aa-a418-90b4021f0caf/dg7tvzh-015c883b-4bd7-44bf-a939-839b1f0cfa5d.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzg2MTZjOTY3LWZmNmQtNDBhYS1hNDE4LTkwYjQwMjFmMGNhZlwvZGc3dHZ6aC0wMTVjODgzYi00YmQ3LTQ0YmYtYTkzOS04MzliMWYwY2ZhNWQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Vt3uisCx2fBQcoYk0JqMRn9cPsw8p2y_P4QNUgkifR4'),
-    (6, 'Nintendo', 'https://wallpapercave.com/wp/wp7622265.jpg'),
+    (5, 'Warner', 'https://img.goodfon.com/original/1920x1080/b/5e/wb-games-logo-warner.jpg'),
+    (6, 'Nintendo', 'https://i0.wp.com/www.webpronews.com/wp-content/uploads/2025/01/Nintendo.png?fit=1920%2C1080&ssl=1'),
     (7, 'Tencent Games', 'https://naavik.co/wp-content/uploads/2021/04/Tencent-1.png'),
     (8, 'Epic Games', 'https://thebusinessofesports.com/wp-content/uploads/2021/04/epicgames.jpg'),
     (9, 'Sony', 'https://i.pinimg.com/originals/2c/46/a7/2c46a7151e9739826f9ac8ed9da5e2ba.jpg'),

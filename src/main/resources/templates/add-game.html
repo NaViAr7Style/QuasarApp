@@ -70,10 +70,10 @@
                     th:name="genre"
                     class="form-control"
                     th:field="*{genre}">
-                <option value="" selected>Select a genre</option>
+                <option value="" selected hidden>Select a genre</option>
                 <option th:each="genre : ${genres}"
                         th:value="${genre}"
-                        th:text=" ${#strings.capitalize(genre.toLowerCase())}">
+                        th:text="${#strings.capitalize(#strings.toLowerCase(genre))}">
                 </option>
             </select>
             <p th:if="${#fields.hasErrors('genre')}"
@@ -105,7 +105,7 @@
                     th:name="publisherName"
                     class="form-control"
                     th:field="*{publisherName}">
-                <option value="" selected>Select a game publisher</option>
+                <option value="" selected hidden>Select a game publisher</option>
                 <option th:each="publisher : ${publishers}"
                         th:value="${publisher}"
                         th:text=" ${publisher}">

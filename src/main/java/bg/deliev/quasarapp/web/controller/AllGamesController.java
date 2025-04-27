@@ -2,6 +2,7 @@ package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.model.dto.AddGameDTO;
 import bg.deliev.quasarapp.model.dto.GameSummaryDTO;
+import bg.deliev.quasarapp.model.enums.GameGenreEnum;
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import bg.deliev.quasarapp.service.interfaces.PublisherService;
 import jakarta.validation.Valid;
@@ -16,16 +17,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/games")
 public class AllGamesController {
 
     private final GameService gameService;
+    private final PublisherService publisherService;
 
     public AllGamesController(GameService gameService,
                               PublisherService publisherService) {
         this.gameService = gameService;
+        this.publisherService = publisherService;
     }
 
     @GetMapping("/all")
@@ -44,16 +48,23 @@ public class AllGamesController {
     @GetMapping("/add")
     public ModelAndView add(@ModelAttribute("addGameDTO") AddGameDTO addGameDTO) {
 
-        return new ModelAndView("add-game");
+        ModelAndView modelAndView = new ModelAndView("add-game");
+
+        modelAndView.addObject("genres", GameGenreEnum.values());
+
+        modelAndView.addObject("publishers", publisherService.getAllPublisherNames());
+
+        return modelAndView;
     }
 
+    // TODO: Preserve the data in the form if there are errors as well as the Genre and Publisher list objects
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ModelAndView add(@Valid AddGameDTO addGameDTO,
                             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("add-game");
+            return new ModelAndView("redirect:/games/add");
         }
 
         gameService.addGame(addGameDTO);

@@ -41,6 +41,16 @@ public class PublisherServiceImpl implements PublisherService {
                 .map(publisherEntity -> modelMapper.map(publisherEntity, PublisherSummaryDTO.class));
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000)
+    @Override
+    public List<String> getAllPublisherNames() {
+        return publisherRepository
+                .findAll()
+                .stream()
+                .map(PublisherEntity::getName)
+                .toList();
+    }
+
     @Override
     public void deletePublisher(Long id) {
 
