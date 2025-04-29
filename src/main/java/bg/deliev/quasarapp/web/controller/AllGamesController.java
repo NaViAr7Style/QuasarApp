@@ -63,8 +63,14 @@ public class AllGamesController {
     public ModelAndView add(@Valid AddGameDTO addGameDTO,
                             BindingResult bindingResult) {
 
+        ModelAndView modelAndView = new ModelAndView("add-game");
+
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("redirect:/games/add");
+
+            modelAndView.addObject("genres", GameGenreEnum.values());
+            modelAndView.addObject("publishers", publisherService.getAllPublisherNames());
+
+            return modelAndView;
         }
 
         gameService.addGame(addGameDTO);

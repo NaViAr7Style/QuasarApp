@@ -1,3 +1,57 @@
+DROP DATABASE IF EXISTS quasar_gameshop_app;
+
+CREATE DATABASE quasar_gameshop_app CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE quasar_gameshop_app;
+
+CREATE TABLE roles (
+                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                       role VARCHAR(255)
+);
+
+CREATE TABLE publishers (
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            name VARCHAR(255) NOT NULL UNIQUE,
+                            thumbnail_url TEXT NOT NULL
+);
+
+CREATE TABLE games (
+                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                       name VARCHAR(255) NOT NULL UNIQUE,
+                       description TEXT NOT NULL,
+                       price DECIMAL(19,2) NOT NULL,
+                       genre VARCHAR(255) NOT NULL,
+                       thumbnail_url TEXT NOT NULL,
+                       publisher_id BIGINT NOT NULL,
+                       CONSTRAINT fk_games_publisher FOREIGN KEY (publisher_id) REFERENCES publishers(id)
+);
+
+CREATE TABLE users (
+                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                       first_name VARCHAR(255) NOT NULL,
+                       last_name VARCHAR(255) NOT NULL,
+                       email VARCHAR(255) NOT NULL UNIQUE,
+                       password VARCHAR(255) NOT NULL,
+                       is_active BOOLEAN,
+                       CHECK (is_active IN (0,1))
+);
+
+CREATE TABLE users_roles (
+                             user_id BIGINT NOT NULL,
+                             role_id BIGINT NOT NULL,
+                             PRIMARY KEY (user_id, role_id),
+                             CONSTRAINT fk_users_roles_user FOREIGN KEY (user_id) REFERENCES users(id),
+                             CONSTRAINT fk_users_roles_role FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+CREATE TABLE user_activation_codes (
+                                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                       activation_code VARCHAR(255),
+                                       created TIMESTAMP,
+                                       user_id BIGINT,
+                                       CONSTRAINT fk_activation_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
     (1, 'admin@example.com', 'AdminEntity', 'Adminov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
@@ -41,7 +95,7 @@ VALUES
     (3, 'Heroes of the Storm', 'Heroes of the Storm is a crossover multiplayer online battle arena video game developed and published by Blizzard Entertainment. Announced at BlizzCon 2010, it was released on June 2, 2015 for macOS and Windows. The game features various characters from Blizzard''s franchises as playable heroes, as well as different battlegrounds based on Warcraft, Diablo, StarCraft, and Overwatch universes. Players form into five-player teams and fight against another team in 5-versus-5 matches, with an average game duration of roughly 20 minutes. The first team to destroy opponents'' main structure, known as the "King''s Core", wins the match. Each themed battleground has a different metagame and secondary objectives to secure, whose completion gives your team massive advantages, typically through pushing power. Every player controls a single character, known as a "hero", with a set of distinctive abilities and differing styles of play.', 'MOBA', 0.00, 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/60cf6d84-894b-49d5-a3e6-66373ca67c9e/d7v89xp-85385f5d-cff9-4813-afd4-c3773d413a44.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYwY2Y2ZDg0LTg5NGItNDlkNS1hM2U2LTY2MzczY2E2N2M5ZVwvZDd2ODl4cC04NTM4NWY1ZC1jZmY5LTQ4MTMtYWZkNC1jMzc3M2Q0MTNhNDQuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.qUcMTWFkjMjBQ0ifeAhK2Vlr9fyy4t_g4M06rAJd5bA', 1),
     (4, 'League of Legends', 'League of Legends (LoL), commonly referred to as League, is a 2009 multiplayer online battle arena video game developed and published by Riot Games. Inspired by Defense of the Ancients, a custom map for Warcraft III, Riot''s founders sought to develop a stand-alone game in the same genre. Since its release in October 2009, League has been free-to-play and is monetized through purchasable character customization. The game is available for Microsoft Windows and macOS. In the game, two teams of five players battle in player-versus-player combat, each team occupying and defending their half of the map. Each of the ten players controls a character, known as a "champion", with unique abilities and differing styles of play. During a match, champions become more powerful by collecting experience points, earning gold, and purchasing items to defeat the opposing team.', 'MOBA', 0.00, 'https://wallpapers.com/images/hd/1920x1080-league-of-legends-background-1920-x-1080-92yl7k7yo4sretk5.jpg', 2),
     (5, 'Valorant', 'Valorant is a team-based first-person tactical hero shooter set in the near future.[4][5][6][7] Players play as one of a set of Agents, characters based on several countries and cultures around the world.[7] In the main game mode, players are assigned to either the attacking or defending team with each team having five players on it. Agents have unique abilities, each requiring charges, as well as a unique ultimate ability that requires charging through kills, deaths, orbs, or objectives. Every player starts each round with a "classic" pistol and one or more "signature ability" charges.[5] Other weapons and ability charges can be purchased using an in-game economic system that awards money based on the outcome of the previous round, any kills the player is responsible for, and any objectives completed. The game has an assortment of weapons including secondary guns like sidearms and primary guns like submachine guns, shotguns, machine guns, assault rifles and sniper rifles.', 'FPS', 0.00, 'https://wallpapers.com/images/hd/valorant-1920x1080-oyk1prl7pymr3uil.jpg', 2),
-    (6, 'Assassin\'s Creed', 'Assassin''s Creed is an action-adventure game developed by Ubisoft Montreal and published by Ubisoft. It is the first installment in the Assassin''s Creed series. The video game was released for PlayStation 3 and Xbox 360 in November 2007. A Microsoft Windows version titled Assassin''s Creed: Director''s Cut Edition containing additional content was released in April 2008. The plot is set in a fictional history of real-world events, taking place primarily during the Third Crusade in the Holy Land in 1191. The player character is a modern-day man named Desmond Miles who, through a machine called the Animus, relives the genetic memories of his ancestor, Altaïr Ibn-La''Ahad. Through this plot device, details emerge about a millennia-old struggle between two factions: the Assassin Brotherhood (inspired by the real-life Order of Assassins), who fight to preserve peace and free will, and the Templar Order (inspired by the Knights Templar military order), who seek to establish peace through order and control.', 'ACTION', 140.00, 'https://wallpaperset.com/w/full/6/6/d/44270.jpg', 3),
+    (6, 'Assassins Creed', 'Assassin''s Creed is an action-adventure game developed by Ubisoft Montreal and published by Ubisoft. It is the first installment in the Assassin''s Creed series. The video game was released for PlayStation 3 and Xbox 360 in November 2007. A Microsoft Windows version titled Assassin''s Creed: Director''s Cut Edition containing additional content was released in April 2008. The plot is set in a fictional history of real-world events, taking place primarily during the Third Crusade in the Holy Land in 1191. The player character is a modern-day man named Desmond Miles who, through a machine called the Animus, relives the genetic memories of his ancestor, Altaïr Ibn-La''Ahad. Through this plot device, details emerge about a millennia-old struggle between two factions: the Assassin Brotherhood (inspired by the real-life Order of Assassins), who fight to preserve peace and free will, and the Templar Order (inspired by the Knights Templar military order), who seek to establish peace through order and control.', 'ACTION', 140.00, 'https://wallpaperset.com/w/full/6/6/d/44270.jpg', 3),
     (7, 'Far Cry', 'Far Cry is a 2004 first-person shooter game developed by Crytek and published by Ubisoft. It is the first installment in the Far Cry franchise. Set on a mysterious tropical archipelago, the game follows Jack Carver, a former American special operations forces operative, as he searches for journalist Valerie Constantine, who accompanied him to the islands but went missing after their boat was destroyed by mercenaries. As Jack explores the islands, he begins to discover the horrific genetic experiments being conducted on the local wildlife and must confront the mad scientist behind them. The game was the first to use Crytek''s CryEngine, and was designed as an open-ended first-person shooter, though it lacks most of the freedom its successors would offer to the player. While players can freely explore the game''s world like in later Far Cry titles, they are most often discouraged from doing so due to the linear structure of missions and the lack of side content.', 'FPS', 110.00, 'https://www.psu.com/wp/wp-content/uploads/2020/10/Far-Cry-6-PS5-Wallpapers-12.jpg', 3),
     (8, 'The Elder Scrolls', 'The Elder Scrolls is a series of action role-playing video games primarily developed by Bethesda Game Studios and published by Bethesda Softworks. The series focuses on free-form gameplay in an open world. Morrowind, Oblivion and Skyrim all won Game of the Year awards from multiple outlets. The series has sold more than 58 million copies worldwide. Within the series'' fictional universe, each game takes place on the continent of Tamriel. The setting combines pre-medieval real-world elements, such as a powerful Roman-like Empire, with high fantasy medieval themes, including limited technology, widespread magic use, and the existence of many mythological creatures. The continent is split into a number of provinces inhabited by humans and humanoid fantasy races such as elves, orcs and anthropomorphic animals. A common theme in the lore is that a chosen hero rises to defeat an impending threat (typically a malevolent being or an antagonistic army).', 'MMORPG', 90.00, 'https://wallpapers.com/images/hd/hel-ra-citadel-elder-scrolls-5053dyd8903fpabu.jpg', 4),
     (9, 'Mortal Kombat', 'Mortal Kombat is a media franchise centered on a series of fighting video games originally developed by Midway Games in 1992. The original Mortal Kombat arcade game spawned a franchise consisting of action-adventure games, a comic book series, a card game, films, an animated TV series, and a live-action tour. Mortal Kombat has become the best-selling fighting game franchise worldwide and one of the highest-grossing media franchises of all time. The series has a reputation for high levels of graphic violence, including, most notably, its fatalities, which are finishing moves that kill defeated opponents instead of knocking them out. Controversies surrounding Mortal Kombat, in part, led to the creation of the Entertainment Software Rating Board (ESRB) video game rating system. Early games in the series were noted for their realistic digitized sprites and an extensive use of palette swapping to create new characters.', 'FIGHTING', 60.00, 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/dddb8beb-7509-4c66-bc59-5e64fc25d614/dehrr3o-d49a6a43-baba-4036-8acb-5a2ee34bf97a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RkZGI4YmViLTc1MDktNGM2Ni1iYzU5LTVlNjRmYzI1ZDYxNFwvZGVocnIzby1kNDlhNmE0My1iYWJhLTQwMzYtOGFjYi01YTJlZTM0YmY5N2EuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.PPtzKmJkLsy_uX2gSiittiiGRAnRG4jzb74yWwHtG10', 5),

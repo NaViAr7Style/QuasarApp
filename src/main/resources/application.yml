@@ -8,12 +8,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
-    defer-datasource-initialization: true
+      ddl-auto: none
+    defer-datasource-initialization: false
 
   sql:
     init:
-      mode: never
+      mode: always
 
   mvc:
     hiddenmethod:
