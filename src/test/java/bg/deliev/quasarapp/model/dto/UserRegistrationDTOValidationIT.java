@@ -1,34 +1,28 @@
 package bg.deliev.quasarapp.model.dto;
 
+import bg.deliev.quasarapp.model.entity.UserEntity;
 import bg.deliev.quasarapp.repository.UserRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Set;
 
+import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUSerRegistrationDTO;
+import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class UserRegistrationDTOTest {
+class UserRegistrationDTOValidationIT {
 
   @Autowired
   private Validator validator;
 
-  @MockBean
+  @Autowired
   private UserRepository userRepository;
-
-  @BeforeEach
-  void setUp() {
-    when(userRepository.findByEmail(anyString())).thenReturn(java.util.Optional.empty());
-  }
 
   @Test
   void whenValidUserRegistrationDTO_thenNoViolations() {
@@ -64,7 +58,7 @@ class UserRegistrationDTOTest {
 
   @Test
   void whenEmailIsInvalid_thenValidationError() {
-    UserRegistrationDTO dto = createValidDTO();
+    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
 
     dto.setEmail("invalid-email");
 
@@ -77,7 +71,7 @@ class UserRegistrationDTOTest {
 
   @Test
   void whenPasswordIsTooShort_thenValidationError() {
-    UserRegistrationDTO dto = createValidDTO();
+    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
 
     dto.setPassword("Short1!");
     dto.setConfirmPassword("Short1!");
@@ -91,7 +85,7 @@ class UserRegistrationDTOTest {
 
   @Test
   void whenPasswordDoesNotMatchPattern_thenValidationError() {
-    UserRegistrationDTO dto = createValidDTO();
+    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
 
     dto.setPassword("lowercasepassword"); // missing uppercase and special characters
     dto.setConfirmPassword("lowercasepassword");
@@ -105,7 +99,7 @@ class UserRegistrationDTOTest {
 
   @Test
   void whenPasswordsDoNotMatch_thenValidationError() {
-    UserRegistrationDTO dto = createValidDTO();
+    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
 
     dto.setPassword("Strong@1234");
     dto.setConfirmPassword("Different@1234");
@@ -116,15 +110,21 @@ class UserRegistrationDTOTest {
         .anyMatch(v -> v.getMessage().equals("Passwords should match.")));
   }
 
-  private UserRegistrationDTO createValidDTO() {
-    UserRegistrationDTO dto = new UserRegistrationDTO();
+  @Test
+  void whenEmailAlreadyExists_thenValidationError() {
+    UserEntity validUser = createValidUser();
+    validUser.setEmail("existing_email@test.com");
+    userRepository.save(validUser);
 
-    dto.setFirstName("Jane");
-    dto.setLastName("Doe");
-    dto.setEmail("jane.doe@example.com");
-    dto.setPassword("Strong@1234");
-    dto.setConfirmPassword("Strong@1234");
+    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    dto.setEmail("existing_email@test.com");
 
-    return dto;
+    Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(dto);
+
+    assertTrue(violations.stream()
+        .anyMatch(v -> v.getPropertyPath().toString().equals("email")
+            && v.getMessage().equals("Empty email or already in use")));
+
   }
+
 }

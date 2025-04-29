@@ -1,7 +1,6 @@
 package bg.deliev.quasarapp.service.scheduler;
 
 import bg.deliev.quasarapp.service.interfaces.UserActivationService;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,8 +12,10 @@ public class ActivationLinkCleanUpScheduler {
         this.userActivationService = userActivationService;
     }
 
-    @Scheduled(cron = "0 0 2 * * ?")
-    public void cleanUp() {
-        userActivationService.activationLinkCleanUp();
-    }
+//  Unnecessary after the removal of user activation
+
+//    @Scheduled(cron = "0 0 2 * * ?")
+//    public void cleanUp() {
+//        userActivationService.activationLinkCleanUp();
+//    }
 }

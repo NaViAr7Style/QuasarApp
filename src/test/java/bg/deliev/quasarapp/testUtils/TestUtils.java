@@ -1,5 +1,8 @@
 package bg.deliev.quasarapp.testUtils;
 
+import bg.deliev.quasarapp.model.dto.AddGameDTO;
+import bg.deliev.quasarapp.model.dto.AddPublisherDTO;
+import bg.deliev.quasarapp.model.dto.UserRegistrationDTO;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.model.entity.UserEntity;
@@ -9,9 +12,7 @@ import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class TestUtils {
 
@@ -24,29 +25,9 @@ public class TestUtils {
         user.setFirstName("FirstName");
         user.setLastName("LastName");
         user.setEmail("test_email@test.com");
-        user.setPassword("test");
+        user.setPassword("Strong@1234");
         user.setActive(true);
         user.setRoles(Set.of(userRoleEntity));
-
-        return user;
-    }
-
-    public static UserEntity createValidAdmin() {
-        UserEntity user = new UserEntity();
-
-        Set<UserRoleEntity> roles = Arrays.stream(UserRoleEnum.values())
-            .map(userRoleEnum -> {
-                UserRoleEntity userRoleEntity = new UserRoleEntity();
-                userRoleEntity.setRole(userRoleEnum);
-                return userRoleEntity;
-            }).collect(Collectors.toSet());
-
-        user.setFirstName("FirstName");
-        user.setLastName("LastName");
-        user.setEmail("test_email@test.com");
-        user.setPassword("test");
-        user.setActive(true);
-        user.setRoles(roles);
 
         return user;
     }
@@ -57,11 +38,23 @@ public class TestUtils {
         user.setFirstName("FirstName");
         user.setLastName("LastName");
         user.setEmail("test_email_no_roles@test.com");
-        user.setPassword("test");
+        user.setPassword("Strong@1234");
         user.setActive(true);
         user.setRoles(Set.of());
 
         return user;
+    }
+
+    public static UserRegistrationDTO createValidUSerRegistrationDTO() {
+        UserRegistrationDTO dto = new UserRegistrationDTO();
+
+        dto.setFirstName("John");
+        dto.setLastName("Doe");
+        dto.setEmail("john.doe@example.com");
+        dto.setPassword("Strong@1234");
+        dto.setConfirmPassword("Strong@1234");
+
+        return dto;
     }
 
     public static boolean containsAuthority(UserDetails userDetails, String expectedAuthority) {
@@ -71,19 +64,6 @@ public class TestUtils {
             .anyMatch(authority -> expectedAuthority.equals(authority.getAuthority()));
     }
 
-    public static GameEntity createValidGame(PublisherEntity publisher) {
-        GameEntity game = new GameEntity();
-
-        game.setName("Test Game");
-        game.setDescription("Test Description");
-        game.setPrice(new BigDecimal("19.99"));
-        game.setGenre(GameGenreEnum.ACTION);
-        game.setThumbnailUrl("https://example.com/thumbnail.jpg");
-        game.setPublisher(publisher);
-
-        return game;
-    }
-
     public static PublisherEntity createValidPublisher() {
         PublisherEntity publisher = new PublisherEntity();
 
@@ -91,5 +71,40 @@ public class TestUtils {
         publisher.setThumbnailUrl("https://example.com/publisher.jpg");
 
         return publisher;
+    }
+
+    public static AddPublisherDTO createValidAddPublisherDTO() {
+        AddPublisherDTO dto = new AddPublisherDTO();
+
+        dto.setName("Test Publisher");
+        dto.setThumbnailUrl("https://example.com/publisher.jpg");
+
+        return dto;
+    }
+
+    public static GameEntity createValidGame(PublisherEntity publisher) {
+        GameEntity game = new GameEntity();
+
+        game.setName("Test Game");
+        game.setDescription("Test Description");
+        game.setPrice(BigDecimal.valueOf(20.00));
+        game.setGenre(GameGenreEnum.ACTION);
+        game.setThumbnailUrl("https://example.com/image.jpg");
+        game.setPublisher(publisher);
+
+        return game;
+    }
+
+    public static AddGameDTO createValidAddGameDTO() {
+        AddGameDTO dto = new AddGameDTO();
+
+        dto.setName("Test Game");
+        dto.setDescription("Test Description");
+        dto.setPrice(BigDecimal.valueOf(20.00));
+        dto.setGenre(GameGenreEnum.ACTION);
+        dto.setThumbnailUrl("https://example.com/image.png");
+        dto.setPublisherName("SomePublisher");
+
+        return dto;
     }
 }
