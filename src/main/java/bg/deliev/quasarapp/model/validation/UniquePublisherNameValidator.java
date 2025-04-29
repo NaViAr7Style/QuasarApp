@@ -1,17 +1,17 @@
 package bg.deliev.quasarapp.model.validation;
 
-import bg.deliev.quasarapp.repository.GameRepository;
+import bg.deliev.quasarapp.repository.PublisherRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UniqueGameNameValidator implements ConstraintValidator<UniqueGameName, String> {
+public class UniquePublisherNameValidator implements ConstraintValidator<UniquePublisherName, String> {
 
-    private final GameRepository gameRepository;
+    private final PublisherRepository publisherRepository;
 
-    public UniqueGameNameValidator(GameRepository gameRepository) {
-        this.gameRepository = gameRepository;
+    public UniquePublisherNameValidator(PublisherRepository publisherRepository) {
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class UniqueGameNameValidator implements ConstraintValidator<UniqueGameNa
             return false;
         }
 
-        return gameRepository
+        return publisherRepository
             .findByName(value)
             .isEmpty();
     }

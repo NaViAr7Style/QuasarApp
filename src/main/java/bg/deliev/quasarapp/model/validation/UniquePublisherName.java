@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueGameNameValidator.class)
-public @interface UniqueGameName {
+@Constraint(validatedBy = UniquePublisherNameValidator.class)
+public @interface UniquePublisherName {
 
     String message() default "The field value should be unique";
 
