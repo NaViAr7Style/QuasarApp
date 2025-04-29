@@ -22,7 +22,7 @@ public class UniqueUserEmailValidator implements ConstraintValidator<UniqueUserE
         }
 
         return userRepository
-                .findByEmail(value)
-                .isEmpty();
+            .findByEmail(value)
+            .isEmpty();
     }
 }

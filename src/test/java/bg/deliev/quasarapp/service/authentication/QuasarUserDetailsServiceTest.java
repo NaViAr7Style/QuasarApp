@@ -15,7 +15,6 @@ import java.util.Optional;
 
 import static bg.deliev.quasarapp.testUtils.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

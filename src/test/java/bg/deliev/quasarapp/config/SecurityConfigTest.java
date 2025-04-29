@@ -3,9 +3,6 @@ package bg.deliev.quasarapp.config;
 import bg.deliev.quasarapp.model.dto.UpdateUserRolesDTO;
 import bg.deliev.quasarapp.model.dto.UserDetailsDTO;
 import bg.deliev.quasarapp.model.dto.UserManagementDTO;
-import bg.deliev.quasarapp.model.entity.UserEntity;
-import bg.deliev.quasarapp.model.entity.UserRoleEntity;
-import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -148,25 +142,5 @@ class SecurityConfigTest {
             .contentType("application/json")
             .content("{\"id\":1,\"roles\":[\"ROLE_USER\"]}"))
         .andExpect(status().isForbidden());
-  }
-
-  private static UserEntity createTestUser() {
-    UserEntity user = new UserEntity();
-
-    Set<UserRoleEntity> roles = Arrays.stream(UserRoleEnum.values())
-        .map(userRoleEnum -> {
-          UserRoleEntity userRoleEntity = new UserRoleEntity();
-          userRoleEntity.setRole(userRoleEnum);
-          return userRoleEntity;
-        }).collect(Collectors.toSet());
-
-    user.setFirstName("FirstName");
-    user.setLastName("LastName");
-    user.setEmail("test_email@test.com");
-    user.setPassword("test");
-    user.setActive(true);
-    user.setRoles(roles);
-
-    return user;
   }
 }

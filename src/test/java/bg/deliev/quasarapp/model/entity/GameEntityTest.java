@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 
 import static bg.deliev.quasarapp.testUtils.TestUtils.createValidGame;
 import static bg.deliev.quasarapp.testUtils.TestUtils.createValidPublisher;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
 @SpringJUnitConfig
