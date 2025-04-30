@@ -29,7 +29,8 @@
          class="d-flex justify-content-center align-items-center mt-5"
          sec:authorize="hasRole('ADMIN')">
         <form th:method="DELETE"
-              th:action="@{/publisher/{id}/games(id=*{publisherId})}">
+              th:action="@{/publisher/{id}(id=*{publisherId})}"
+              onsubmit="return confirm('Are you sure you want to delete this publisher?');">
             <input type="submit" value="Delete" class="link card-link">
         </form>
     </div>

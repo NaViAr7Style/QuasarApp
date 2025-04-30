@@ -46,7 +46,8 @@
             </ul>
             <div class="card-body" sec:authorize="hasRole('ADMIN')">
                 <form th:method="DELETE"
-                      th:action="@{/game/{id}(id=*{id})}">
+                      th:action="@{/game/{id}(id=*{id})}"
+                      onsubmit="return confirm('Are you sure you want to delete this game?');">
                     <input type="submit" value="Delete" class="link card-link">
                 </form>
             </div>

@@ -12,11 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/users")
 public class AuthenticationController {
 
-    private final UserService userService;
+//    private final UserService userService;
 
-    public AuthenticationController(UserService userService) {
-        this.userService = userService;
-    }
+//    public AuthenticationController(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @GetMapping("/login")
     public ModelAndView login() {

@@ -2,6 +2,8 @@ package bg.deliev.quasarapp.web.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -12,13 +14,18 @@ import java.time.format.DateTimeFormatter;
 
 public class LoggingInterceptor implements HandlerInterceptor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingInterceptor.class);
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              @NonNull HttpServletResponse response,
                              @NonNull Object handler) {
 
-        System.out.println("Request URL: " + request.getRequestURL());
-        System.out.println("Request Time: " + convertMillisToDateTime(System.currentTimeMillis()));
+        LOGGER.info("Request Timestamp: {}, Method: {}, URL: {}, IP: {}",
+            convertMillisToDateTime(System.currentTimeMillis()),
+            request.getMethod(),
+            request.getRequestURL(),
+            request.getRemoteAddr());
 
         return true;
     }

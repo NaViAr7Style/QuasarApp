@@ -64,19 +64,19 @@ public class TestUtils {
             .anyMatch(authority -> expectedAuthority.equals(authority.getAuthority()));
     }
 
-    public static PublisherEntity createValidPublisher() {
+    public static PublisherEntity createValidPublisher(String name) {
         PublisherEntity publisher = new PublisherEntity();
 
-        publisher.setName("Test Publisher");
+        publisher.setName(name);
         publisher.setThumbnailUrl("https://example.com/publisher.jpg");
 
         return publisher;
     }
 
-    public static AddPublisherDTO createValidAddPublisherDTO() {
+    public static AddPublisherDTO createValidAddPublisherDTO(String name) {
         AddPublisherDTO dto = new AddPublisherDTO();
 
-        dto.setName("Test Publisher");
+        dto.setName(name);
         dto.setThumbnailUrl("https://example.com/publisher.jpg");
 
         return dto;

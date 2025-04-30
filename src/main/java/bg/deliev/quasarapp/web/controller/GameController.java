@@ -48,7 +48,7 @@ public class GameController {
     @DeleteMapping("/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
 
-        gameService.deleteOffer(id);
+        gameService.deleteGame(id);
 
         return new ModelAndView("redirect:/games/all");
     }

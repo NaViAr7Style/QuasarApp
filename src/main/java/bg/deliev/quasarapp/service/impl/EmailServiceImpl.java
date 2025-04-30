@@ -92,6 +92,4 @@ public class EmailServiceImpl implements EmailService {
 
         return templateEngine.process("email/registration-email", context);
     }
-
-
 }

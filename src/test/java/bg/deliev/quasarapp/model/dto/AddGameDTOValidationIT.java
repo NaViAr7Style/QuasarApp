@@ -41,7 +41,7 @@ public class AddGameDTOValidationIT {
 
   @Test
   void shouldFailValidation_whenGameNameAlreadyExists() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     publisherRepository.save(publisher);
 
     GameEntity existingGame = createValidGame(publisher);

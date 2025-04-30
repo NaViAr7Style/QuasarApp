@@ -14,7 +14,6 @@ import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.aop.WarnIfExecutionExceeds;
 import bg.deliev.quasarapp.service.interfaces.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,21 +29,20 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final UserActivationCodeRepository userActivationCodeRepository;
-    private final ApplicationEventPublisher appEventPublisher;
+//    private final ApplicationEventPublisher appEventPublisher;
 
 
     public UserServiceImpl(UserRepository userRepository,
                            ModelMapper modelMapper,
                            PasswordEncoder passwordEncoder,
                            RoleRepository roleRepository,
-                           UserActivationCodeRepository userActivationCodeRepository,
-                           ApplicationEventPublisher appEventPublisher) {
+                           UserActivationCodeRepository userActivationCodeRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.userActivationCodeRepository = userActivationCodeRepository;
-        this.appEventPublisher = appEventPublisher;
+//        this.appEventPublisher = appEventPublisher;
     }
 
     @Override

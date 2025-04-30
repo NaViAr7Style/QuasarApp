@@ -23,7 +23,7 @@ class GameEntityTest {
 
   @Test
   void whenGameIsValid_thenItPersists() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
     GameEntity game = createValidGame(publisher);
@@ -35,7 +35,7 @@ class GameEntityTest {
 
   @Test
   void whenPriceIsNegative_thenValidationFails() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
     GameEntity game = createValidGame(publisher);
@@ -49,7 +49,7 @@ class GameEntityTest {
 
   @Test
   void whenNameIsNull_thenConstraintViolation() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
     GameEntity game = createValidGame(publisher);
@@ -63,7 +63,7 @@ class GameEntityTest {
 
   @Test
   void whenNameIsDuplicate_thenFails() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
     GameEntity game1 = createValidGame(publisher);
@@ -90,7 +90,7 @@ class GameEntityTest {
 
   @Test
   void whenNameIsBlank_thenValidationFails() {
-    PublisherEntity publisher = createValidPublisher();
+    PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
     GameEntity game = createValidGame(publisher);

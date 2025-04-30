@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,15 +60,13 @@ public class PublisherController {
         return modelAndView;
     }
 
-//    Not implemented. TODO
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
 
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @DeleteMapping("/{id}")
-//    public ModelAndView delete(@PathVariable("id") Long id) {
-//
-//        publisherService.deletePublisher(id);
-//
-//        return new ModelAndView("redirect:/publishers/all");
-//    }
+        publisherService.deletePublisher(id);
+
+        return new ModelAndView("redirect:/publishers/all");
+    }
 
 }

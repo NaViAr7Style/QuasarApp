@@ -14,7 +14,7 @@ public interface GameService {
 
     GameDetailsDTO getGameDetails(Long id);
 
-    void deleteOffer(Long id);
+    void deleteGame(Long id);
 
     void addGame(AddGameDTO addGameDTO);
 }

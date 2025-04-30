@@ -18,6 +18,4 @@ public interface PublisherService {
     String getPublisherName(long id);
 
     void addPublisher(AddPublisherDTO addPublisherDTO);
-
-    List<PublisherSummaryDTO> getAll();
 }

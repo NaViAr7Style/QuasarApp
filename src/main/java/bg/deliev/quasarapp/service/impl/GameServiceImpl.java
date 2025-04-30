@@ -60,7 +60,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteOffer(Long id) {
+    public void deleteGame(Long id) {
         gameRepository.deleteById(id);
     }
 

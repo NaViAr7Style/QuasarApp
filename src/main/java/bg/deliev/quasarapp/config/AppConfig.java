@@ -15,12 +15,16 @@ public class AppConfig implements WebMvcConfigurer {
         return new ModelMapper();
     }
 
+    @Bean
+    public LoggingInterceptor loggingInterceptor() {
+        return new LoggingInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoggingInterceptor())
+        registry.addInterceptor(loggingInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**")
-                .excludePathPatterns("/images/**");
+                .excludePathPatterns("/css/**", "/images/**", "/favicon.ico", "/js/**");
     }
 
 }
