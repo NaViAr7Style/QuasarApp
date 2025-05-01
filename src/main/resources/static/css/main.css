@@ -28,8 +28,6 @@ body {
     margin-bottom: 6rem;
 }
 
-
-
 .custom-toggler-icon {
     color: white;
 }
@@ -136,4 +134,16 @@ tr > * {
     left: 10rem;
     max-width: 25vw;
     max-height: 25vh;
+}
+
+.min-role-width {
+    min-width: 100px;
+}
+
+.action-buttons .btn {
+    min-width: 100px;
+}
+
+.dropdown-menu {
+    position: absolute !important;
 }

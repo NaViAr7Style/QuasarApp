@@ -54,11 +54,11 @@ CREATE TABLE user_activation_codes (
 
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
-    (1, 'admin@example.com', 'AdminEntity', 'Adminov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
-    (2, 'user@example.com', 'UserEntity', 'Userov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
-    (3, 'test1@example.com', 'Test1', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
-    (4, 'test2@example.com', 'Test2', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
-    (5, 'test3@example.com', 'Test3', 'Test', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1);
+    (1, 'admin@example.com', 'Admin', 'Adminov', 'dbdf0b8ac3ac6929e531db1a76ddaf9cd0ef7426821ab55c75795c14f3e82627c1571f14ab3a53eb377c07e713fd0d99', 1),
+    (2, 'user@example.com', 'User', 'Userov', '09921b9c84c1c8a0e5b1e22d7e25df9490e31aa284efddd23f3c3d13c755978b925929e9337729a76dda3329c89b122b', 1),
+    (3, 'aSortByRoleThenByEmailCaseInsensitive@example.com', 'Test1', 'Test1', '051eebe2663fe430f1c79cbe83da2f28780a5540d4fa1923531d882e02e875358fadb707b1b4bcffd9a416bb180b1228', 1),
+    (4, 'BSortByRoleThenByEmailCaseInsensitive@example.com', 'Test2', 'Test2', '051eebe2663fe430f1c79cbe83da2f28780a5540d4fa1923531d882e02e875358fadb707b1b4bcffd9a416bb180b1228', 1),
+    (5, 'cSortByRoleThenByEmailCaseInsensitive@example.com', 'Test3', 'Test3', '051eebe2663fe430f1c79cbe83da2f28780a5540d4fa1923531d882e02e875358fadb707b1b4bcffd9a416bb180b1228', 1);
 
 INSERT INTO roles (id, role)
 VALUES

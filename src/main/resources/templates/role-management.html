@@ -21,7 +21,8 @@
         <th>Username</th>
         <th>Full name</th>
         <th>Role</th>
-        <th>Actions</th>
+        <th><div class="mr-2">Actions</div></th>
+<!--        <th>Actions</th>-->
     </tr>
     </thead>
     <tbody id="userTable">
@@ -29,287 +30,158 @@
 </table>
 
 <script>
+    (() => {
+        const userTable = document.getElementById("userTable");
+        let currentUsername = "";
 
-    let currentUsername = "";
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUsername = "[[${username}]]".trim();
+            fetchAllUsers();
+        });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        currentUsername = "[[${username}]]";
-        fetchAllUsers();
-    });
+        function fetchAllUsers() {
+            userTable.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
 
-    function fetchAllUsers() {
+            fetch('/api/users')
+                .then(res => res.json())
+                .then(users => renderUserTable(users))
+                .catch(() => {
+                    userTable.innerHTML = '<tr><td colspan="5">Failed to load users.</td></tr>';
+                });
+        }
 
-        let userTable = document.getElementById("userTable");
+        function renderUserTable(users) {
+            userTable.innerHTML = '';
+            const fragment = document.createDocumentFragment();
 
-        userTable.innerText = '';
+            users.forEach(user => {
+                const tr = document.createElement('tr');
 
-        fetch('http://localhost:8080/api/users')
-            .then(res => res.json())
-            .then(users => users.forEach(user => {
+                tr.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.email}</td>
+                <td>${user.firstName} ${user.lastName}</td>
+                <td class="min-role-width">${formatRoles(user.roles)}</td>
+                <td class="action-buttons"></td>
+            `;
 
-                let tr = document.createElement('tr');
+                const actionsTd = tr.querySelector('.action-buttons');
+                const isCurrentUser = user.email === currentUsername;
 
-                let id = document.createElement('td');
-                let username = document.createElement('td');
-                let fullName = document.createElement('td');
-                let role = document.createElement('td');
+                const editBtn = createButton('Edit role', 'btn-info mr-2', () => editUser(tr, user));
+                editBtn.disabled = isCurrentUser;
 
-                id.textContent = user.id;
-                username.textContent = user.email;
-                fullName.textContent = user.firstName + ' ' + user.lastName;
+                const deleteBtn = createButton('Delete', 'btn-danger mr-2', () => deleteUser(user.id));
+                deleteBtn.disabled = isCurrentUser;
 
-                role.textContent = user.roles.includes('ADMIN') ? 'Admin' : 'User';
+                actionsTd.append(editBtn, deleteBtn);
+                fragment.appendChild(tr);
+            });
 
-                tr.appendChild(id);
-                tr.appendChild(username);
-                tr.appendChild(fullName);
-                tr.appendChild(role);
+            userTable.appendChild(fragment);
+        }
 
-                let actions = document.createElement('td');
-                actions.classList.add('action-buttons');
+        function formatRoles(roles) {
+            if (roles.includes('ADMIN')) return 'Admin';
+            if (roles.includes('USER')) return 'User';
+            return 'Unknown';
+        }
 
-                let editBtn = document.createElement('button');
-                editBtn.dataset.id = user.id;
-                editBtn.textContent = 'Edit role';
-                editBtn.classList.add('btn');
-                editBtn.classList.add('btn-info');
-                editBtn.classList.add('mr-4');
-                editBtn.addEventListener('click', editUser);
+        function createButton(text, classes, handler) {
+            const btn = document.createElement('button');
+            btn.textContent = text;
+            btn.className = `btn ${classes}`;
+            btn.addEventListener('click', handler);
+            return btn;
+        }
 
-                let deleteBtn = document.createElement('button');
-                deleteBtn.dataset.id = user.id;
-                deleteBtn.textContent = 'Delete';
-                deleteBtn.classList.add('btn');
-                deleteBtn.classList.add('btn-danger');
-                deleteBtn.addEventListener('click', deleteUser);
+        function editUser(row, user) {
+            const cells = row.children;
+            const actionsTd = cells[4];
+            const roleTd = cells[3];
+            const originalRoleText = roleTd.textContent.trim();
 
-                if (user.email === currentUsername.trim()) {
-                    editBtn.disabled = true;
-                    deleteBtn.disabled = true;
+            const roleSelect = document.createElement('select');
+            ['ADMIN', 'USER'].forEach(role => {
+                const opt = document.createElement('option');
+                opt.value = role;
+                opt.textContent = role === 'ADMIN' ? 'Admin' : 'User';
+                if (originalRoleText.toUpperCase() === role) opt.selected = true;
+                roleSelect.appendChild(opt);
+            });
+
+            roleTd.innerHTML = '';
+            roleTd.appendChild(roleSelect);
+
+            actionsTd.innerHTML = '';
+            const saveBtn = createButton('Save', 'btn-success mr-2', () => saveUser(user.id, roleSelect.value));
+            const cancelBtn = createButton('Cancel', 'btn-secondary mr-2', () => cancelEdit(row, user, originalRoleText));
+            actionsTd.append(saveBtn, cancelBtn);
+
+            disableOtherRows(row);
+        }
+
+        function disableOtherRows(activeRow) {
+            const rows = userTable.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                if (row !== activeRow) {
+                    const buttons = row.querySelectorAll('button');
+                    buttons.forEach(btn => btn.disabled = true);
                 }
+            });
+        }
 
-                actions.appendChild(editBtn);
-                actions.appendChild(deleteBtn);
-                tr.appendChild(actions);
-                userTable.appendChild(tr)
+        function enableAllRows() {
+            const rows = userTable.querySelectorAll('tr');
+            rows.forEach(row => {
+                const email = row.children[1]?.textContent.trim();
+                const buttons = row.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    btn.disabled = email === currentUsername.trim();
+                });
+            });
+        }
+
+        function cancelEdit(row, user, originalRole) {
+            row.children[3].textContent = originalRole;
+            enableAllRows();
+            fetchAllUsers();
+        }
+
+        function saveUser(userId, selectedRole) {
+            const confirmChange = window.confirm("Are you sure you want to change the role of this user?");
+            if (!confirmChange) return;
+
+            const payload = {
+                id: userId,
+                roles: selectedRole === 'ADMIN' ? ['ADMIN', 'USER'] : ['USER']
+            };
+
+            fetch('/api/users', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(() => {
+                    enableAllRows();
+                    fetchAllUsers();
                 })
-            )
-    }
-
-    let originalRoleValue;
-
-    function editUser() {
-
-        let userId = this.dataset.id;
-
-        let tableRow = this.parentNode.parentNode;
-
-        let editButtons = document.querySelectorAll('.btn-info');
-
-        editButtons.forEach(button => {
-            button.disabled = true;
-        });
-
-
-        // Replace "Edit role" button with "Save" button
-        let saveButton = createSaveButton(userId);
-        this.parentNode.replaceChild(saveButton, this);
-
-        disableAllDeleteButtons();
-
-        // Replace "Delete" button with "Cancel" button
-        let deleteButton = tableRow.querySelector('.btn-danger');
-        let cancelButton = createCancelButton(userId);
-        deleteButton.parentNode.replaceChild(cancelButton, deleteButton);
-
-        let roleTd = tableRow.children[3];
-
-        originalRoleValue = roleTd.textContent.trim();
-
-        let roleSelect = document.createElement('select');
-
-        let adminOpt = document.createElement('option');
-
-        adminOpt.value = 'ADMIN';
-        adminOpt.textContent = 'Admin';
-        roleSelect.appendChild(adminOpt);
-
-        let userOpt = document.createElement('option');
-        userOpt.value = 'USER';
-        userOpt.textContent = 'User';
-        roleSelect.appendChild(userOpt);
-
-        let currentRole = roleTd.textContent.toUpperCase();
-        for (let i = 0; i < roleSelect.options.length; i++) {
-            if (roleSelect.options[i].value === currentRole) {
-                roleSelect.options[i].selected = true;
-                break;
-            }
+                .catch(() => window.location.href = '/error');
         }
 
-        roleTd.innerHTML = '';
-        roleTd.appendChild(roleSelect);
-    }
+        function deleteUser(userId) {
+            const confirmed = window.confirm("Are you sure you want to delete this user?");
+            if (!confirmed) return;
 
-    function deleteUser() {
-
-        let confirmDelete = window.confirm("Are you sure you want to delete this user?");
-
-        if (!confirmDelete) {
-            return;
+            fetch(`/api/users/${userId}`, {
+                method: 'DELETE'
+            })
+                .then(() => fetchAllUsers())
+                .catch(() => window.location.href = '/error');
         }
 
-        let userId = this.dataset.id;
-
-        let httpHeaders = {
-            method: 'DELETE'
-        }
-
-        fetch(`http://localhost:8080/api/users/${userId}`, httpHeaders)
-            .then(_ => fetchAllUsers())
-            .catch(_error => window.location.href = '/error');
-    }
-
-    function disableAllDeleteButtons() {
-        let deleteButtons = document.querySelectorAll('.btn-danger');
-        deleteButtons.forEach(button => {
-            button.disabled = true;
-        });
-    }
-
-    function createSaveButton(userId) {
-        let saveButton = document.createElement('button');
-        saveButton.dataset.id = userId;
-        saveButton.textContent = 'Save';
-        saveButton.classList.add('btn', 'btn-success', 'mr-4');
-        saveButton.addEventListener('click', saveUser);
-        return saveButton;
-    }
-
-    function createCancelButton(userId) {
-        let cancelButton = document.createElement('button');
-        cancelButton.dataset.id = userId;
-        cancelButton.textContent = 'Cancel';
-        cancelButton.classList.add('btn', 'btn-secondary');
-        cancelButton.addEventListener('click', cancelEdit);
-        return cancelButton;
-    }
-
-    function saveUser() {
-
-        let confirmRoleChange = window.confirm("Are you sure you want to change the role of this user?");
-
-        if (!confirmRoleChange) {
-            return;
-        }
-
-        let userId = this.dataset.id;
-
-        let tableRow = this.parentNode.parentNode;
-        let roleSelect = tableRow.querySelector('select');
-        let selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
-
-        let requestBody;
-
-        if (selectedRole === 'ADMIN') {
-            requestBody = {
-                id: userId,
-                roles: [
-                    "ADMIN",
-                    "USER"
-                ]
-            };
-        } else {
-            requestBody = {
-                id: userId,
-                roles: [
-                    "USER"
-                ]
-            };
-        }
-
-        fetch('http://localhost:8080/api/users', {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        })
-            .then(_ => fetchAllUsers())
-            .catch(_error => window.location.href = '/error');
-    }
-
-    function cancelEdit() {
-
-        let tableRow = this.parentNode.parentNode;
-        let roleTd = tableRow.children[3];
-        roleTd.innerHTML = originalRoleValue;
-
-        restoreOriginalState(this.dataset.id);
-    }
-
-    function restoreOriginalState(userId) {
-        enableAllEditRoleButtons();
-        enableAllDeleteButtons();
-
-        // Replace "Save" button with "Edit role" button
-        let saveButton = document.querySelector(`button[data-id="${userId}"][class*="btn-success"]`);
-        if (saveButton) {
-            let editRoleButton = createEditRoleButton(userId);
-            saveButton.parentNode.replaceChild(editRoleButton, saveButton);
-        }
-
-        // Replace "Cancel" button with "Delete" button
-        let cancelButton = document.querySelector(`button[data-id="${userId}"][class*="btn-secondary"]`);
-        if (cancelButton) {
-            let deleteButton = createDeleteButton(userId);
-            cancelButton.parentNode.replaceChild(deleteButton, cancelButton);
-        }
-    }
-
-    function createEditRoleButton(userId) {
-        let editRoleButton = document.createElement('button');
-        editRoleButton.dataset.id = userId;
-        editRoleButton.textContent = 'Edit role';
-        editRoleButton.classList.add('btn', 'btn-info', 'mr-4');
-        editRoleButton.addEventListener('click', editUser);
-        return editRoleButton;
-    }
-
-    function createDeleteButton(userId) {
-        let deleteButton = document.createElement('button');
-        deleteButton.dataset.id = userId;
-        deleteButton.textContent = 'Delete';
-        deleteButton.classList.add('btn', 'btn-danger');
-        deleteButton.addEventListener('click', deleteUser);
-        return deleteButton;
-    }
-
-    function enableAllEditRoleButtons() {
-        let editRoleButtons = document.querySelectorAll('.btn-info');
-        editRoleButtons.forEach(button => {
-            let row = button.closest('tr');
-            if (row.querySelector('td:nth-child(2)').textContent.trim() === currentUsername.trim()) {
-                button.disabled = true;
-            } else {
-                button.disabled = false;
-            }
-        });
-
-    }
-
-    function enableAllDeleteButtons() {
-        let deleteButtons = document.querySelectorAll('.btn-danger');
-        deleteButtons.forEach(button => {
-            let row = button.closest('tr');
-            if (row.querySelector('td:nth-child(2)').textContent.trim() === currentUsername.trim()) {
-                button.disabled = true;
-            } else {
-                button.disabled = false;
-            }
-        });
-    }
-
+    })();
 </script>
 
 </body>

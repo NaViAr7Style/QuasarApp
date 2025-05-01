@@ -13,7 +13,11 @@ import bg.deliev.quasarapp.repository.UserActivationCodeRepository;
 import bg.deliev.quasarapp.repository.UserRepository;
 import bg.deliev.quasarapp.service.aop.WarnIfExecutionExceeds;
 import bg.deliev.quasarapp.service.interfaces.UserService;
+import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
@@ -47,11 +53,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registerUser(UserRegistrationDTO userRegistrationDTO) {
-        UserEntity user = modelMapper.map(userRegistrationDTO, UserEntity.class);
-        user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        user.setActive(true);
+        if (userRepository.findByEmail(userRegistrationDTO.getEmail()).isPresent()) {
+
+            LOGGER.warn("Registration failed: Email {} is already taken.", userRegistrationDTO.getEmail());
+
+            return false;
+        }
 
         try {
+            UserEntity user = modelMapper.map(userRegistrationDTO, UserEntity.class);
+            user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
+            user.setActive(true);
+
             UserRoleEntity userRole = roleRepository.getByRole(UserRoleEnum.USER);
             user.getRoles().add(userRole);
 
@@ -69,7 +82,15 @@ public class UserServiceImpl implements UserService {
 //            );
 
             return true;
-        } catch (Exception e) {
+        } catch (MappingException | DataAccessException | NoSuchElementException ex) {
+
+            LOGGER.warn("User registration failed: {}", ex.getMessage());
+
+            return false;
+        } catch (Exception ex) {
+
+            LOGGER.error("Unexpected error during user registration: {}", ex.getMessage());
+
             return false;
         }
     }
@@ -95,12 +116,16 @@ public class UserServiceImpl implements UserService {
 
         return entities
                 .stream()
-                .map(e -> {
-                    UserManagementDTO dto = modelMapper.map(e, UserManagementDTO.class);
-                    mapRolesToDTO(e, dto);
+                .map(userEntity -> {
+                    UserManagementDTO dto = modelMapper.map(userEntity, UserManagementDTO.class);
+                    mapRolesToDTO(userEntity, dto);
                     return dto;
                 })
-                .sorted(Comparator.comparing(UserManagementDTO::getId))
+                .sorted(
+                    Comparator
+                        .<UserManagementDTO>comparingInt(dto -> hasAdminRole(dto) ? 0 : 1)
+                        .thenComparing(UserManagementDTO::getEmail, String.CASE_INSENSITIVE_ORDER)
+                )
                 .toList();
     }
 
@@ -177,5 +202,9 @@ public class UserServiceImpl implements UserService {
             .stream()
             .map(role -> role.getRole().name())
             .toList();
+    }
+
+    private boolean hasAdminRole(UserManagementDTO dto) {
+        return dto.getRoles().contains(UserRoleEnum.ADMIN.name());
     }
 }

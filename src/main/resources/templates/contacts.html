@@ -25,7 +25,6 @@
                     <input type="text"
                            class="form-control"
                            id="name"
-                           th:name="name"
                            th:field="*{name}"
                            placeholder="Enter your name">
                     <p th:if="${#fields.hasErrors('name')}"
@@ -38,7 +37,6 @@
                     <label for="email" class="text-white">Email Address</label>
                     <input class="form-control"
                            id="email"
-                           th:name="email"
                            th:field="*{email}"
                            placeholder="Enter your email">
                     <p th:if="${#fields.hasErrors('email')}"
@@ -51,7 +49,6 @@
                     <label for="message" class="text-white">Your Message</label>
                     <textarea class="form-control"
                               id="message"
-                              th:name="message"
                               th:field="*{message}"
                               rows="4"
                               placeholder="Type your message">

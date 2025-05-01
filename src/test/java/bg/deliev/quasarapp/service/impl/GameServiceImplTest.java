@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,12 +37,12 @@ class GameServiceImplTest {
   @Mock
   private PublisherRepository publisherRepository;
 
-  private GameServiceImpl service;
+  private GameServiceImpl gameService;
 
   @BeforeEach
   void setUp() {
     // Mix of real and mocked dependencies, so setup is necessary instead of @InjectMocks
-    service = new GameServiceImpl(gameRepository, modelMapper, publisherRepository);
+    gameService = new GameServiceImpl(gameRepository, modelMapper, publisherRepository);
   }
 
   @Test
@@ -52,7 +53,7 @@ class GameServiceImplTest {
     when(gameRepository.findAll(any(Pageable.class)))
         .thenReturn(new PageImpl<>(List.of(entity)));
 
-    Page<GameSummaryDTO> result = service.getAllGames(Pageable.unpaged());
+    Page<GameSummaryDTO> result = gameService.getAllGames(Pageable.unpaged());
 
     assertEquals(1, result.getContent().size());
     assertEquals("Halo", result.getContent().get(0).getName());
@@ -66,7 +67,7 @@ class GameServiceImplTest {
     when(gameRepository.findAllByPublisherId(eq(5L), any(Pageable.class)))
         .thenReturn(new PageImpl<>(List.of(entity)));
 
-    Page<GameSummaryDTO> result = service.getAllGamesByPublisherId(5L, Pageable.unpaged());
+    Page<GameSummaryDTO> result = gameService.getAllGamesByPublisherId(5L, Pageable.unpaged());
 
     assertEquals("Halo", result.getContent().get(0).getName());
   }
@@ -78,7 +79,7 @@ class GameServiceImplTest {
 
     when(gameRepository.findById(42L)).thenReturn(Optional.of(game));
 
-    GameDetailsDTO dto = service.getGameDetails(42L);
+    GameDetailsDTO dto = gameService.getGameDetails(42L);
     assertEquals("Half-Life", dto.getName());
   }
 
@@ -86,12 +87,12 @@ class GameServiceImplTest {
   void testGetGameDetailsThrowsWhenNotFound() {
     when(gameRepository.findById(1L)).thenReturn(Optional.empty());
 
-    assertThrows(NoSuchElementException.class, () -> service.getGameDetails(1L));
+    assertThrows(NoSuchElementException.class, () -> gameService.getGameDetails(1L));
   }
 
   @Test
   void testDeleteGameCallsRepository() {
-    service.deleteGame(7L);
+    gameService.deleteGame(7L);
     verify(gameRepository).deleteById(7L);
   }
 
@@ -102,7 +103,7 @@ class GameServiceImplTest {
 
     when(gameRepository.findByName("Portal")).thenReturn(Optional.of(new GameEntity()));
 
-    assertThrows(EntityExistsException.class, () -> service.addGame(dto));
+    assertThrows(EntityExistsException.class, () -> gameService.addGame(dto));
   }
 
   @Test
@@ -118,7 +119,7 @@ class GameServiceImplTest {
 
     when(publisherRepository.findByName("Valve")).thenReturn(Optional.of(publisher));
 
-    service.addGame(dto);
+    gameService.addGame(dto);
 
     verify(gameRepository).save(any(GameEntity.class));
   }
@@ -132,6 +133,6 @@ class GameServiceImplTest {
     when(gameRepository.findByName("Doom")).thenReturn(Optional.empty());
     when(publisherRepository.findByName("id Software")).thenReturn(Optional.empty());
 
-    assertThrows(NoSuchElementException.class, () -> service.addGame(dto));
+    assertThrows(NoSuchElementException.class, () -> gameService.addGame(dto));
   }
 }

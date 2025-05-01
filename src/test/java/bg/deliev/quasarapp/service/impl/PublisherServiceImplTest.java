@@ -35,12 +35,12 @@ public class PublisherServiceImplTest {
   @Mock
   private GameRepository gameRepository;
 
-  private PublisherServiceImpl service;
+  private PublisherServiceImpl publisherService;
 
   @BeforeEach
   void setUp() {
     // Mix of real and mocked dependencies, so setup is necessary instead of @InjectMocks
-    service = new PublisherServiceImpl(publisherRepository, modelMapper, gameRepository);
+    publisherService = new PublisherServiceImpl(publisherRepository, modelMapper, gameRepository);
   }
 
   @Test
@@ -50,7 +50,7 @@ public class PublisherServiceImplTest {
 
     when(publisherRepository.findAll()).thenReturn(List.of(entity1, entity2));
 
-    List<String> names = service.getAllPublisherNames();
+    List<String> names = publisherService.getAllPublisherNames();
 
     assertEquals(List.of("Ubisoft", "EA"), names);
   }
@@ -63,7 +63,7 @@ public class PublisherServiceImplTest {
     when(publisherRepository.findById(1L)).thenReturn(Optional.of(entity));
     when(gameRepository.findAllByPublisherId(1L)).thenReturn(List.of());
 
-    service.deletePublisher(1L);
+    publisherService.deletePublisher(1L);
 
     verify(publisherRepository).deleteById(1L);
   }
@@ -78,7 +78,7 @@ public class PublisherServiceImplTest {
 
     UnsupportedOperationException ex = assertThrows(
         UnsupportedOperationException.class,
-        () -> service.deletePublisher(1L)
+        () -> publisherService.deletePublisher(1L)
     );
 
     assertTrue(ex.getMessage().contains("has 1 published games"));
@@ -91,7 +91,7 @@ public class PublisherServiceImplTest {
 
     when(publisherRepository.findById(1L)).thenReturn(Optional.of(entity));
 
-    assertEquals("Test Publisher", service.getPublisherName(1L));
+    assertEquals("Test Publisher", publisherService.getPublisherName(1L));
   }
 
   @Test
@@ -100,7 +100,7 @@ public class PublisherServiceImplTest {
 
     NoSuchElementException ex = assertThrows(
         NoSuchElementException.class,
-        () -> service.getPublisherName(1L)
+        () -> publisherService.getPublisherName(1L)
     );
 
     assertTrue(ex.getMessage().contains("doesn't exist"));
@@ -112,7 +112,7 @@ public class PublisherServiceImplTest {
 
     when(publisherRepository.findByName("Test Publisher")).thenReturn(Optional.empty());
 
-    service.addPublisher(dto);
+    publisherService.addPublisher(dto);
 
     verify(publisherRepository).save(
         argThat(publisher -> publisher.getName().equals("Test Publisher"))
@@ -126,6 +126,6 @@ public class PublisherServiceImplTest {
     when(publisherRepository.findByName("Test Publisher"))
         .thenReturn(Optional.of(new PublisherEntity()));
 
-    assertThrows(EntityExistsException.class, () -> service.addPublisher(dto));
+    assertThrows(EntityExistsException.class, () -> publisherService.addPublisher(dto));
   }
 }

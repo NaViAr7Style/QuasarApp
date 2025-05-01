@@ -24,9 +24,8 @@
             <label for="name">Title:</label>
             <input type="text"
                    id="name"
-                   th:name="name"
-                   class="form-control"
-                   th:field="*{name}"/>
+                   th:field="*{name}"
+                   class="form-control"/>
             <p th:if="${#fields.hasErrors('name')}"
                th:errors="*{name}"
                class="errors alert alert-danger">
@@ -38,9 +37,9 @@
         <div class="form-group">
             <label for="description">Description:</label>
             <textarea id="description"
-                      th:name="description"
-                      class="form-control"
-                      th:field="*{description}"></textarea>
+                      th:field="*{description}"
+                      class="form-control">
+            </textarea>
             <p th:if="${#fields.hasErrors('description')}"
                th:errors="*{description}"
                class="errors alert alert-danger">
@@ -53,9 +52,8 @@
             <label for="price">Price:</label>
             <input type="number"
                    id="price"
-                   th:name="price"
-                   class="form-control"
-                   th:field="*{price}"/>
+                   th:field="*{price}"
+                   class="form-control"/>
             <p th:if="${#fields.hasErrors('price')}"
                th:errors="*{price}"
                class="errors alert alert-danger">
@@ -67,9 +65,8 @@
         <div class="form-group">
             <label for="genre">Genre:</label>
             <select id="genre"
-                    th:name="genre"
-                    class="form-control"
-                    th:field="*{genre}">
+                    th:field="*{genre}"
+                    class="form-control">
                 <option value="" selected hidden>Select a genre</option>
                 <option th:each="genre : ${genres}"
                         th:value="${genre}"
@@ -88,9 +85,8 @@
             <label for="thumbnailUrl">Thumbnail URL:</label>
             <input type="text"
                    id="thumbnailUrl"
-                   th:name="thumbnailUrl"
-                   class="form-control"
-                   th:field="*{thumbnailUrl}"/>
+                   th:field="*{thumbnailUrl}"
+                   class="form-control"/>
             <p th:if="${#fields.hasErrors('thumbnailUrl')}"
                th:errors="*{thumbnailUrl}"
                class="errors alert alert-danger">
@@ -102,9 +98,8 @@
         <div class="form-group">
             <label for="publisherName">Publisher:</label>
             <select id="publisherName"
-                    th:name="publisherName"
-                    class="form-control"
-                    th:field="*{publisherName}">
+                    th:field="*{publisherName}"
+                    class="form-control">
                 <option value="" selected hidden>Select a game publisher</option>
                 <option th:each="publisher : ${publishers}"
                         th:value="${publisher}"

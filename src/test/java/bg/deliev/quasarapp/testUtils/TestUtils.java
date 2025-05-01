@@ -16,18 +16,27 @@ import java.util.Set;
 
 public class TestUtils {
 
+    private static final String TEST_FIRST_NAME = "John";
+    private static final String TEST_LAST_NAME = "Doe";
+    private static final String TEST_EMAIL = "john_doe@test.com";
+    private static final String TEST_PASSWORD = "Strong@1234";
+    private static final String TEST_THUMBNAIL_URL = "https://example.com/image.jpg";
+    private static final String TEST_PUBLISHER_NAME = "Test Publisher";
+    private static final String TEST_GAME_NAME = "Test Game";
+    private static final String TEST_DESCRIPTION = "Test Description";
+    private static final BigDecimal TEST_PRICE = BigDecimal.valueOf(20.00);
+    private static final GameGenreEnum TEST_GAME_GENRE = GameGenreEnum.ACTION;
+    private static final UserRoleEnum TEST_USER_ROLE = UserRoleEnum.USER;
+
     public static UserEntity createValidUser() {
         UserEntity user = new UserEntity();
 
-        UserRoleEntity userRoleEntity = new UserRoleEntity();
-        userRoleEntity.setRole(UserRoleEnum.USER);
-
-        user.setFirstName("FirstName");
-        user.setLastName("LastName");
-        user.setEmail("test_email@test.com");
-        user.setPassword("Strong@1234");
+        user.setFirstName(TEST_FIRST_NAME);
+        user.setLastName(TEST_LAST_NAME);
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(TEST_PASSWORD);
         user.setActive(true);
-        user.setRoles(Set.of(userRoleEntity));
+        user.setRoles(Set.of(new UserRoleEntity(TEST_USER_ROLE)));
 
         return user;
     }
@@ -35,10 +44,10 @@ public class TestUtils {
     public static UserEntity createValidUserWithoutRoles() {
         UserEntity user = new UserEntity();
 
-        user.setFirstName("FirstName");
-        user.setLastName("LastName");
-        user.setEmail("test_email_no_roles@test.com");
-        user.setPassword("Strong@1234");
+        user.setFirstName(TEST_FIRST_NAME);
+        user.setLastName(TEST_LAST_NAME);
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(TEST_PASSWORD);
         user.setActive(true);
         user.setRoles(Set.of());
 
@@ -48,11 +57,11 @@ public class TestUtils {
     public static UserRegistrationDTO createValidUSerRegistrationDTO() {
         UserRegistrationDTO dto = new UserRegistrationDTO();
 
-        dto.setFirstName("John");
-        dto.setLastName("Doe");
-        dto.setEmail("john.doe@example.com");
-        dto.setPassword("Strong@1234");
-        dto.setConfirmPassword("Strong@1234");
+        dto.setFirstName(TEST_FIRST_NAME);
+        dto.setLastName(TEST_LAST_NAME);
+        dto.setEmail(TEST_EMAIL);
+        dto.setPassword(TEST_PASSWORD);
+        dto.setConfirmPassword(TEST_PASSWORD);
 
         return dto;
     }
@@ -68,7 +77,7 @@ public class TestUtils {
         PublisherEntity publisher = new PublisherEntity();
 
         publisher.setName(name);
-        publisher.setThumbnailUrl("https://example.com/publisher.jpg");
+        publisher.setThumbnailUrl(TEST_THUMBNAIL_URL);
 
         return publisher;
     }
@@ -77,7 +86,7 @@ public class TestUtils {
         AddPublisherDTO dto = new AddPublisherDTO();
 
         dto.setName(name);
-        dto.setThumbnailUrl("https://example.com/publisher.jpg");
+        dto.setThumbnailUrl(TEST_THUMBNAIL_URL);
 
         return dto;
     }
@@ -85,11 +94,11 @@ public class TestUtils {
     public static GameEntity createValidGame(PublisherEntity publisher) {
         GameEntity game = new GameEntity();
 
-        game.setName("Test Game");
-        game.setDescription("Test Description");
-        game.setPrice(BigDecimal.valueOf(20.00));
-        game.setGenre(GameGenreEnum.ACTION);
-        game.setThumbnailUrl("https://example.com/image.jpg");
+        game.setName(TEST_GAME_NAME);
+        game.setDescription(TEST_DESCRIPTION);
+        game.setPrice(TEST_PRICE);
+        game.setGenre(TEST_GAME_GENRE);
+        game.setThumbnailUrl(TEST_THUMBNAIL_URL);
         game.setPublisher(publisher);
 
         return game;
@@ -98,12 +107,12 @@ public class TestUtils {
     public static AddGameDTO createValidAddGameDTO() {
         AddGameDTO dto = new AddGameDTO();
 
-        dto.setName("Test Game");
-        dto.setDescription("Test Description");
-        dto.setPrice(BigDecimal.valueOf(20.00));
-        dto.setGenre(GameGenreEnum.ACTION);
-        dto.setThumbnailUrl("https://example.com/image.png");
-        dto.setPublisherName("SomePublisher");
+        dto.setName(TEST_GAME_NAME);
+        dto.setDescription(TEST_DESCRIPTION);
+        dto.setPrice(TEST_PRICE);
+        dto.setGenre(TEST_GAME_GENRE);
+        dto.setThumbnailUrl(TEST_THUMBNAIL_URL);
+        dto.setPublisherName(TEST_PUBLISHER_NAME);
 
         return dto;
     }

@@ -24,7 +24,6 @@
             <label for="name">Name:</label>
             <input type="text"
                    id="name"
-                   th:name="name"
                    th:field="*{name}"
                    class="form-control"/>
             <p th:if="${#fields.hasErrors('name')}"
@@ -39,7 +38,6 @@
             <label for="thumbnailUrl">Thumbnail URL:</label>
             <input type="text"
                    id="thumbnailUrl"
-                   th:name="thumbnailUrl"
                    th:field="*{thumbnailUrl}"
                    class="form-control"/>
             <p th:if="${#fields.hasErrors('thumbnailUrl')}"

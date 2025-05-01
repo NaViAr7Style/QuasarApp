@@ -17,23 +17,22 @@
 
     <!-- REGISTRATION FORM START -->
     <form
-            id="registration-form"
             th:action="@{/users/register}"
             th:method="POST"
             th:object="${userRegistrationDTO}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
 
         <div th:if="${hasRegistrationError}"
-             class="d-flex mt-4 mb-4 alert-danger justify-content-center align-items-center h-75 text-center"
-        >
+             class="d-flex mt-4 mb-4 alert-danger justify-content-center align-items-center h-75 text-center">
+
             <p class="mt-2 font-weight-bold">Registration Error occurred!</p>
+
         </div>
 
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
                 <input id="firstName"
-                       th:name="firstName"
                        th:field="*{firstName}"
                        type="text"
                        class="form-control"
@@ -47,7 +46,6 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="lastName" class="text-white font-weight-bold">Last Name</label>
                 <input id="lastName"
-                       th:name="lastName"
                        th:field="*{lastName}"
                        type="text"
                        class="form-control"
@@ -63,7 +61,6 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="email" class="text-white font-weight-bold">Email</label>
                 <input id="email"
-                       th:name="email"
                        th:field="*{email}"
                        type="text"
                        class="form-control"
@@ -79,7 +76,6 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="password" class="text-white font-weight-bold">Password</label>
                 <input id="password"
-                       th:name="password"
                        th:field="*{password}"
                        type="password"
                        class="form-control"
@@ -93,7 +89,6 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="confirmPassword" class="text-white font-weight-bold">Confirm password</label>
                 <input id="confirmPassword"
-                       th:name="confirmPassword"
                        th:field="*{confirmPassword}"
                        type="password"
                        class="form-control"
