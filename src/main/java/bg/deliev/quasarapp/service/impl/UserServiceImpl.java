@@ -164,20 +164,18 @@ public class UserServiceImpl implements UserService {
         userActivationCodeRepository.delete(byActivationCode);
     }
 
-    private static void mapRolesToDTO(UserEntity userEntity, Object dto) {
-        List<String> roles = userEntity
-                .getRoles()
-                .stream()
-                .map(roleEntity -> roleEntity.getRole().name())
-                .toList();
+    private static void mapRolesToDTO(UserEntity userEntity, UserDetailsDTO dto) {
+        dto.setRoles(extractRoles(userEntity));
+    }
 
-        if (dto instanceof UserDetailsDTO) {
-            ((UserDetailsDTO) dto).setRoles(roles);
-            return;
-        }
+    private static void mapRolesToDTO(UserEntity userEntity, UserManagementDTO dto) {
+        dto.setRoles(extractRoles(userEntity));
+    }
 
-        if (dto instanceof UserManagementDTO) {
-            ((UserManagementDTO) dto).setRoles(roles);
-        }
+    private static List<String> extractRoles(UserEntity userEntity) {
+        return userEntity.getRoles()
+            .stream()
+            .map(role -> role.getRole().name())
+            .toList();
     }
 }
