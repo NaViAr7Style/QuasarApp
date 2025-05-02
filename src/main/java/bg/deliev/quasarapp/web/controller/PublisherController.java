@@ -58,7 +58,7 @@ public class PublisherController {
                 URI uri = new URI(lastPage);
                 MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(uri).build().getQueryParams();
                 size = queryParams.getFirst("size");
-                page = page = queryParams.getFirst("page");
+                page = queryParams.getFirst("page");
             } catch (URISyntaxException | IllegalArgumentException e) {
                 LOGGER.error("Error parsing URI: {}", e.getMessage());
             }
