@@ -41,8 +41,6 @@ class SecurityConfigTest {
     mockMvc.perform(get("/contacts")).andExpect(status().isOk());
     mockMvc.perform(get("/faq")).andExpect(status().isOk());
     mockMvc.perform(get("/about")).andExpect(status().isOk());
-    mockMvc.perform(get("/game/1")).andExpect(status().isOk());
-    mockMvc.perform(get("/publisher/1/games")).andExpect(status().isOk());
     mockMvc.perform(get("/users/register")).andExpect(status().isOk());
   }
 

@@ -10,8 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
-import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUSerRegistrationDTO;
 import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUser;
+import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUserRegistrationDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -58,7 +58,7 @@ class UserRegistrationDTOValidationIT {
 
   @Test
   void whenEmailIsInvalid_thenValidationError() {
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setEmail("invalid-email");
 
@@ -71,7 +71,7 @@ class UserRegistrationDTOValidationIT {
 
   @Test
   void whenPasswordIsTooShort_thenValidationError() {
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("Short1!");
     dto.setConfirmPassword("Short1!");
@@ -85,7 +85,7 @@ class UserRegistrationDTOValidationIT {
 
   @Test
   void whenPasswordDoesNotMatchPattern_thenValidationError() {
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("lowercasepassword"); // missing uppercase and special characters
     dto.setConfirmPassword("lowercasepassword");
@@ -99,7 +99,7 @@ class UserRegistrationDTOValidationIT {
 
   @Test
   void whenPasswordsDoNotMatch_thenValidationError() {
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("Strong@1234");
     dto.setConfirmPassword("Different@1234");
@@ -116,7 +116,7 @@ class UserRegistrationDTOValidationIT {
     validUser.setEmail("existing_email@test.com");
     userRepository.save(validUser);
 
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
     dto.setEmail("existing_email@test.com");
 
     Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(dto);

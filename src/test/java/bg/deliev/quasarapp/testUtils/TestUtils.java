@@ -54,7 +54,7 @@ public class TestUtils {
         return user;
     }
 
-    public static UserRegistrationDTO createValidUSerRegistrationDTO() {
+    public static UserRegistrationDTO createValidUserRegistrationDTO() {
         UserRegistrationDTO dto = new UserRegistrationDTO();
 
         dto.setFirstName(TEST_FIRST_NAME);

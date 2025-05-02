@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUSerRegistrationDTO;
+import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUserRegistrationDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -52,7 +52,7 @@ class UserServiceImplTest {
 
   @Test
   void registerUser_ShouldReturnTrue_WhenRegistrationSucceeds() {
-    UserRegistrationDTO dto = createValidUSerRegistrationDTO();
+    UserRegistrationDTO dto = createValidUserRegistrationDTO();
     dto.setPassword("password");
 
     UserEntity userEntity = new UserEntity();
