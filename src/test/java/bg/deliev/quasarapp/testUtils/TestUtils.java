@@ -116,4 +116,17 @@ public class TestUtils {
 
         return dto;
     }
+
+    public static AddGameDTO createValidAddGameDTO(String gameName, String publisherName) {
+        AddGameDTO dto = new AddGameDTO();
+
+        dto.setName(gameName);
+        dto.setDescription(TEST_DESCRIPTION);
+        dto.setPrice(TEST_PRICE);
+        dto.setGenre(TEST_GAME_GENRE);
+        dto.setThumbnailUrl(TEST_THUMBNAIL_URL);
+        dto.setPublisherName(publisherName);
+
+        return dto;
+    }
 }
