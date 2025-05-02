@@ -1,5 +1,8 @@
 package bg.deliev.quasarapp.web.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -7,9 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class ErrorHandler {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
+
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleErrors() {
+    public ModelAndView handleErrors(HttpServletResponse response) {
+
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
+
+        LOGGER.error("Internal server error: {}", response.getStatus());
+
         return new ModelAndView("error");
     }
-
 }

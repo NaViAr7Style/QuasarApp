@@ -56,7 +56,6 @@ public class AllGamesController {
         return modelAndView;
     }
 
-    // TODO: Preserve the data in the form if there are errors as well as the Genre and Publisher list objects
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ModelAndView add(@Valid AddGameDTO addGameDTO,

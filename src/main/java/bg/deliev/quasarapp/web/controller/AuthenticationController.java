@@ -22,7 +22,7 @@ public class AuthenticationController {
         return new ModelAndView("login");
     }
 
-    @PostMapping("/login-error")
+    @GetMapping("/login-error")
     public ModelAndView loginError(@ModelAttribute("email") String email) {
         ModelAndView modelAndView = new ModelAndView("login");
 
