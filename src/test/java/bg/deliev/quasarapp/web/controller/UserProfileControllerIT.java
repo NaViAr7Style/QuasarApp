@@ -59,7 +59,7 @@ class UserProfileControllerIT {
   }
 
   @Test
-  @WithMockUser(username = "")
+  @WithMockUser
   void shouldHandleEmptyUsernameGracefully() throws Exception {
     mockMvc.perform(get("/user/profile"))
         .andExpect(status().is3xxRedirection())
