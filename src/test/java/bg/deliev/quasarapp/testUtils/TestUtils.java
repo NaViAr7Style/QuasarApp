@@ -2,6 +2,7 @@ package bg.deliev.quasarapp.testUtils;
 
 import bg.deliev.quasarapp.model.dto.AddGameDTO;
 import bg.deliev.quasarapp.model.dto.AddPublisherDTO;
+import bg.deliev.quasarapp.model.dto.UserDetailsDTO;
 import bg.deliev.quasarapp.model.dto.UserRegistrationDTO;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
@@ -12,6 +13,7 @@ import bg.deliev.quasarapp.model.enums.UserRoleEnum;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public class TestUtils {
@@ -52,6 +54,17 @@ public class TestUtils {
         user.setRoles(Set.of());
 
         return user;
+    }
+
+    public static UserDetailsDTO createValidUserDetailsDTO() {
+        UserDetailsDTO dto = new UserDetailsDTO();
+
+        dto.setFirstName(TEST_FIRST_NAME);
+        dto.setLastName(TEST_LAST_NAME);
+        dto.setEmail(TEST_EMAIL);
+        dto.setRoles(List.of(TEST_USER_ROLE.toString()));
+
+        return dto;
     }
 
     public static UserRegistrationDTO createValidUserRegistrationDTO() {
