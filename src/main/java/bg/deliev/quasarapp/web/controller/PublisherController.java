@@ -2,6 +2,7 @@ package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.service.interfaces.GameService;
 import bg.deliev.quasarapp.service.interfaces.PublisherService;
+import bg.deliev.quasarapp.util.PaginationUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static bg.deliev.quasarapp.web.controller.PaginationUtils.extractPaginationParams;
+import static bg.deliev.quasarapp.util.PaginationUtils.extractPaginationParams;
 
 @Controller
 @RequestMapping("/publisher")
@@ -54,5 +55,4 @@ public class PublisherController {
 
         return new ModelAndView("redirect:/publishers/all");
     }
-
 }

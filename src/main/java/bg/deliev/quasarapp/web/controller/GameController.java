@@ -1,6 +1,7 @@
 package bg.deliev.quasarapp.web.controller;
 
 import bg.deliev.quasarapp.service.interfaces.GameService;
+import bg.deliev.quasarapp.util.PaginationUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static bg.deliev.quasarapp.web.controller.PaginationUtils.extractPaginationParams;
+import static bg.deliev.quasarapp.util.PaginationUtils.extractPaginationParams;
 
 @Controller
 @RequestMapping("/game")
@@ -44,5 +45,4 @@ public class GameController {
 
         return new ModelAndView("redirect:/games/all");
     }
-
 }

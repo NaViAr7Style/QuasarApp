@@ -1,4 +1,4 @@
-package bg.deliev.quasarapp.web.controller;
+package bg.deliev.quasarapp.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
