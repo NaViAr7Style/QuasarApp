@@ -22,21 +22,21 @@
             <div class="row mb-5">
                 <div class="col-md-6">
                     <label class="font-weight-bold">First Name:</label>
-                    <p th:text="${user.getFirstName()}" class="form-control-plaintext"></p>
+                    <p th:if="${user != null}" th:text="${user.getFirstName()}" class="form-control-plaintext"></p>
                 </div>
                 <div class="col-md-6">
                     <label class="font-weight-bold">Last Name:</label>
-                    <p th:text="${user.getLastName()}" class="form-control-plaintext"></p>
+                    <p th:if="${user != null}" th:text="${user.getLastName()}" class="form-control-plaintext"></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <label class="font-weight-bold">Email:</label>
-                    <p th:text="${user.getEmail()}" class="form-control-plaintext"></p>
+                    <p th:if="${user != null}" th:text="${user.getEmail()}" class="form-control-plaintext"></p>
                 </div>
                 <div class="col-md-6">
                     <label class="font-weight-bold">Role:</label>
-                    <p th:text="${user.getRoles().contains('ADMIN') ? 'Admin' : 'User'}"
+                    <p th:if="${user != null}" th:text="${user.getRoles().contains('ADMIN') ? 'Admin' : 'User'}"
                        class="form-control-plaintext"></p>
                 </div>
             </div>
