@@ -31,17 +31,17 @@ public class UserRegistrationController {
     @PostMapping("/register")
     public ModelAndView register(
             @Valid UserRegistrationDTO userRegistrationDTO,
-            BindingResult bindingResult
-    ) {
+            BindingResult bindingResult) {
+
+        ModelAndView modelAndView = new ModelAndView("register");
 
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("register");
+            return modelAndView;
         }
 
         boolean isSuccessfullyRegistered = userService.registerUser(userRegistrationDTO);
 
         if (!isSuccessfullyRegistered) {
-            ModelAndView modelAndView = new ModelAndView("register");
 
             modelAndView.addObject("hasRegistrationError", true);
 
