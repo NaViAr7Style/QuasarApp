@@ -35,7 +35,7 @@ jobs:
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
       - name: Push Docker image
-        run: docker push $DOCKER_IMAGE
+        run: docker push $$IMAGE
 
       - name: Trigger Render Deploy Hook
         run: curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
