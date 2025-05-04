@@ -79,6 +79,7 @@ class UserServiceImplIT {
     Optional<UserEntity> saved = userRepository.findByEmail(TEST_EMAIL);
     assertTrue(saved.isPresent());
     assertEquals(TEST_FIRST_NAME, saved.get().getFirstName());
+    assertEquals(TEST_LAST_NAME, saved.get().getLastName());
     assertTrue(passwordEncoder.matches(TEST_PASSWORD, saved.get().getPassword()));
   }
 

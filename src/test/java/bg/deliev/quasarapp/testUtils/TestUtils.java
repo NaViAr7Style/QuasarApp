@@ -1,9 +1,6 @@
 package bg.deliev.quasarapp.testUtils;
 
-import bg.deliev.quasarapp.model.dto.AddGameDTO;
-import bg.deliev.quasarapp.model.dto.AddPublisherDTO;
-import bg.deliev.quasarapp.model.dto.UserDetailsDTO;
-import bg.deliev.quasarapp.model.dto.UserRegistrationDTO;
+import bg.deliev.quasarapp.model.dto.*;
 import bg.deliev.quasarapp.model.entity.GameEntity;
 import bg.deliev.quasarapp.model.entity.PublisherEntity;
 import bg.deliev.quasarapp.model.entity.UserEntity;
@@ -18,6 +15,7 @@ import java.util.Set;
 
 public class TestUtils {
 
+    private static final long TEST_USER_ID = 1L;
     private static final String TEST_FIRST_NAME = "John";
     private static final String TEST_LAST_NAME = "Doe";
     private static final String TEST_EMAIL = "john_doe@test.com";
@@ -62,7 +60,28 @@ public class TestUtils {
         dto.setFirstName(TEST_FIRST_NAME);
         dto.setLastName(TEST_LAST_NAME);
         dto.setEmail(TEST_EMAIL);
-        dto.setRoles(List.of(TEST_USER_ROLE.toString()));
+        dto.setRoles(List.of(TEST_USER_ROLE.name()));
+
+        return dto;
+    }
+
+    public static UserManagementDTO createValidUserManagementDTO() {
+        UserManagementDTO dto = new UserManagementDTO();
+
+        dto.setId(TEST_USER_ID);
+        dto.setFirstName(TEST_FIRST_NAME);
+        dto.setLastName(TEST_LAST_NAME);
+        dto.setEmail(TEST_EMAIL);
+        dto.setRoles(List.of(TEST_USER_ROLE.name()));
+
+        return dto;
+    }
+
+    public static UpdateUserRolesDTO createValidUpdateUserRolesDTO() {
+        UpdateUserRolesDTO dto = new UpdateUserRolesDTO();
+
+        dto.setId(TEST_USER_ID);
+        dto.setRoles(List.of(TEST_USER_ROLE.name()));
 
         return dto;
     }

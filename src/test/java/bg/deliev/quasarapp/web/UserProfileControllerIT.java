@@ -55,7 +55,7 @@ class UserProfileControllerIT {
     assertThat(returnedUser.getFirstName()).isEqualTo(TEST_FIRST_NAME);
     assertThat(returnedUser.getLastName()).isEqualTo(TEST_LAST_NAME);
     assertThat(returnedUser.getEmail()).isEqualTo(TEST_EMAIL);
-    assertThat(returnedUser.getRoles()).containsExactly(TEST_USER_ROLE.toString());
+    assertThat(returnedUser.getRoles()).containsExactly(TEST_USER_ROLE.name());
   }
 
   @Test
