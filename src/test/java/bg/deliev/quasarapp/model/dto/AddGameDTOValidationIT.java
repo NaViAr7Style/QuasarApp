@@ -31,7 +31,7 @@ public class AddGameDTOValidationIT {
   private PublisherRepository publisherRepository;
 
   @Test
-  void shouldPassValidation_whenAllFieldsAreValidAndGameNameIsUnique() {
+  void testShouldPassValidationWhenAllFieldsAreValidAndGameNameIsUnique() {
       AddGameDTO dto = createValidAddGameDTO();
 
       Set<ConstraintViolation<AddGameDTO>> violations = validator.validate(dto);
@@ -40,7 +40,7 @@ public class AddGameDTOValidationIT {
   }
 
   @Test
-  void shouldFailValidation_whenGameNameAlreadyExists() {
+  void testShouldFailValidationWhenGameNameAlreadyExists() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     publisherRepository.save(publisher);
 
@@ -60,7 +60,7 @@ public class AddGameDTOValidationIT {
   }
 
   @Test
-  void shouldFailValidation_whenFieldsAreMissingOrInvalid() {
+  void testShouldFailValidationWhenFieldsAreMissingOrInvalid() {
     AddGameDTO dto = new AddGameDTO();
 
     dto.setName("");

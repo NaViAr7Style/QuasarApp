@@ -25,7 +25,7 @@ class UserRegistrationDTOValidationIT {
   private UserRepository userRepository;
 
   @Test
-  void whenValidUserRegistrationDTO_thenNoViolations() {
+  void testWhenValidHasNoViolations() {
     UserRegistrationDTO dto = new UserRegistrationDTO();
 
     dto.setFirstName("John");
@@ -40,7 +40,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenFieldsAreEmpty_thenValidationErrors() {
+  void testWhenFieldsAreEmptyHasValidationErrors() {
     UserRegistrationDTO dto = new UserRegistrationDTO();
 
     Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(dto);
@@ -57,7 +57,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenEmailIsInvalid_thenValidationError() {
+  void testWhenEmailIsInvalidHasValidationError() {
     UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setEmail("invalid-email");
@@ -70,7 +70,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenPasswordIsTooShort_thenValidationError() {
+  void testWhenPasswordIsTooShortHasValidationError() {
     UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("Short1!");
@@ -84,7 +84,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenPasswordDoesNotMatchPattern_thenValidationError() {
+  void testWhenPasswordDoesNotMatchPatternHasValidationError() {
     UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("lowercasepassword"); // missing uppercase and special characters
@@ -98,7 +98,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenPasswordsDoNotMatch_thenValidationError() {
+  void testWhenPasswordsDoNotMatchHasValidationError() {
     UserRegistrationDTO dto = createValidUserRegistrationDTO();
 
     dto.setPassword("Strong@1234");
@@ -111,7 +111,7 @@ class UserRegistrationDTOValidationIT {
   }
 
   @Test
-  void whenEmailAlreadyExists_thenValidationError() {
+  void testWhenEmailAlreadyExistsHasValidationError() {
     UserEntity validUser = createValidUser();
     validUser.setEmail("existing_email@test.com");
     userRepository.save(validUser);

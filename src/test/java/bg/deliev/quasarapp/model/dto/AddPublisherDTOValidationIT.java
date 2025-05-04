@@ -26,7 +26,7 @@ public class AddPublisherDTOValidationIT {
   private PublisherRepository publisherRepository;
 
   @Test
-  void shouldPassValidation_whenAllFieldsAreValidAndNameIsUnique() {
+  void testShouldPassValidationWhenAllFieldsAreValidAndNameIsUnique() {
     AddPublisherDTO dto = createValidAddPublisherDTO("Test Publisher");
 
     Set<ConstraintViolation<AddPublisherDTO>> violations = validator.validate(dto);
@@ -35,7 +35,7 @@ public class AddPublisherDTOValidationIT {
   }
 
   @Test
-  void shouldFailValidation_whenPublisherNameAlreadyExists() {
+  void testShouldFailValidationWhenPublisherNameAlreadyExists() {
     PublisherEntity existingPublisher = createValidPublisher("existingPublisher");
     publisherRepository.save(existingPublisher);
 
@@ -51,7 +51,7 @@ public class AddPublisherDTOValidationIT {
   }
 
   @Test
-  void shouldFailValidation_whenFieldsAreEmpty() {
+  void testShouldFailValidationWhenFieldsAreEmpty() {
     AddPublisherDTO dto = new AddPublisherDTO();
     dto.setName("");
     dto.setThumbnailUrl("");

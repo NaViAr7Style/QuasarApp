@@ -20,7 +20,7 @@ class GameEntityTest {
   private EntityManager entityManager;
 
   @Test
-  void whenGameIsValid_thenItPersists() {
+  void testWhenGameIsValidThenItPersists() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
@@ -32,7 +32,7 @@ class GameEntityTest {
   }
 
   @Test
-  void whenPriceIsNegative_thenValidationFails() {
+  void testWhenPriceIsNegativeValidationFails() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
@@ -46,7 +46,7 @@ class GameEntityTest {
   }
 
   @Test
-  void whenNameIsNull_thenConstraintViolation() {
+  void testWhenNameIsNullThrowsConstraintViolation() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
@@ -60,7 +60,7 @@ class GameEntityTest {
   }
 
   @Test
-  void whenNameIsDuplicate_thenFails() {
+  void testWhenNameIsDuplicateThenFails() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 
@@ -77,7 +77,7 @@ class GameEntityTest {
   }
 
   @Test
-  void whenPublisherIsNull_thenConstraintViolation() {
+  void testWhenPublisherIsNullThrowsConstraintViolation() {
     GameEntity game = createValidGame(null);
 
     assertThrows(ConstraintViolationException.class, () -> {
@@ -87,7 +87,7 @@ class GameEntityTest {
   }
 
   @Test
-  void whenNameIsBlank_thenValidationFails() {
+  void testWhenNameIsBlankValidationFails() {
     PublisherEntity publisher = createValidPublisher("Test Publisher");
     entityManager.persist(publisher);
 

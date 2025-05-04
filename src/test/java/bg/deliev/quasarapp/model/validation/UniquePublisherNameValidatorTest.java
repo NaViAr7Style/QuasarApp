@@ -28,7 +28,7 @@ public class UniquePublisherNameValidatorTest {
   private UniquePublisherNameValidator validator;
 
   @Test
-  void isValid_shouldReturnTrue_whenNameIsUnique() {
+  void testIsValidReturnsTrueWhenNameIsUnique() {
     String publisherName = "UniquePublisher";
 
     when(publisherRepository.findByName(publisherName)).thenReturn(Optional.empty());
@@ -39,7 +39,7 @@ public class UniquePublisherNameValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameAlreadyExists() {
+  void testIsValidReturnsFalseWhenNameAlreadyExists() {
     String publisherName = "ExistingPublisher";
 
     when(publisherRepository.findByName(publisherName)).thenReturn(Optional.of(new PublisherEntity()));
@@ -50,7 +50,7 @@ public class UniquePublisherNameValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameIsNull() {
+  void testIsValidReturnsFalseWhenNameIsNull() {
     boolean result = validator.isValid(null, context);
 
     assertFalse(result);

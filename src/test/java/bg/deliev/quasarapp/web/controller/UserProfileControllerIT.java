@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUserDetailsDTO;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -38,10 +38,10 @@ class UserProfileControllerIT {
 
   @Test
   @WithMockUser(username = TEST_EMAIL)
-  void shouldReturnUserProfileViewWithFullUserDetails() throws Exception {
+  void testGetUserProfileReturnsViewWithFullUserDetails() throws Exception {
     UserDetailsDTO mockUser = createValidUserDetailsDTO();
 
-    given(userService.findByUsername(TEST_EMAIL)).willReturn(mockUser);
+    when(userService.findByUsername(TEST_EMAIL)).thenReturn(mockUser);
 
     MvcResult result = mockMvc.perform(get("/user/profile"))
         .andExpect(status().isOk())
@@ -60,7 +60,7 @@ class UserProfileControllerIT {
 
   @Test
   @WithMockUser
-  void shouldHandleEmptyUsernameGracefully() throws Exception {
+  void testGetUserProfileHandlesEmptyUsername() throws Exception {
     mockMvc.perform(get("/user/profile"))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/login"));
@@ -68,8 +68,8 @@ class UserProfileControllerIT {
 
   @Test
   @WithMockUser(username = "unknownUser")
-  void shouldHandleUserNotFound() throws Exception {
-    given(userService.findByUsername("unknownUser")).willReturn(null);
+  void testGetUserProfileHandlesUserNotFound() throws Exception {
+    when(userService.findByUsername("unknownUser")).thenReturn(null);
 
     mockMvc.perform(get("/user/profile"))
         .andExpect(status().is3xxRedirection())
@@ -77,7 +77,7 @@ class UserProfileControllerIT {
   }
 
   @Test
-  void shouldRejectUnauthorizedAccess() throws Exception {
+  void testGetUserProfileRejectsUnauthorizedAccess() throws Exception {
     mockMvc.perform(get("/user/profile"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrlPattern("**/login"));

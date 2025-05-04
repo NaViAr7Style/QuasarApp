@@ -51,7 +51,7 @@ class UserServiceImplTest {
   private UserServiceImpl userService;
 
   @Test
-  void registerUser_ShouldReturnTrue_WhenRegistrationSucceeds() {
+  void testRegisterUser_ShouldReturnTrue_WhenRegistrationSucceeds() {
     UserRegistrationDTO dto = createValidUserRegistrationDTO();
     dto.setPassword("password");
 
@@ -68,7 +68,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void registerUser_ShouldReturnFalse_WhenExceptionIsThrown() {
+  void testRegisterUser_ShouldReturnFalse_WhenExceptionIsThrown() {
     UserRegistrationDTO dto = new UserRegistrationDTO();
 
     when(modelMapper.map(any(), any())).thenThrow(new RuntimeException("Mapping failed"));
@@ -79,7 +79,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void findByUsername_ShouldReturnUserDetails_WhenUserExists() {
+  void testFindByUsername_ShouldReturnUserDetails_WhenUserExists() {
     String email = "user@example.com";
 
     UserEntity userEntity = new UserEntity();
@@ -95,7 +95,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void findByUsername_ShouldThrow_WhenUserNotFound() {
+  void testFindByUsername_ShouldThrow_WhenUserNotFound() {
     String email = "unknown";
 
     when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
@@ -108,7 +108,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void getAllUsers_ShouldReturnAdminsFirstSortedByEmail() {
+  void testGetAllUsers_ShouldReturnAdminsFirstSortedByEmail() {
     UserEntity user1 = new UserEntity();
     user1.setId(1L);
     user1.setEmail("zuser@example.com");
@@ -158,7 +158,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void findUserById_ShouldReturnDTO_WhenUserExists() {
+  void testFindUserById_ShouldReturnDTO_WhenUserExists() {
     UserEntity user = new UserEntity();
     UserManagementDTO dto = new UserManagementDTO();
     dto.setId(1L);
@@ -172,7 +172,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void findUserById_ShouldReturnEmpty_WhenUserNotFound() {
+  void testFindUserById_ShouldReturnEmpty_WhenUserNotFound() {
     when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
     Optional<UserManagementDTO> result = userService.findUserById(1L);
@@ -181,7 +181,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void deleteUserById_ShouldRemoveRolesAndDeleteUser() {
+  void testDeleteUserById_ShouldRemoveRolesAndDeleteUser() {
     Long userId = 1L;
     UserEntity user = new UserEntity();
     user.setId(userId);
@@ -197,7 +197,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void deleteUserById_ShouldThrow_WhenUserNotFound() {
+  void testDeleteUserById_ShouldThrow_WhenUserNotFound() {
     when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> userService.deleteUserById(1L))
@@ -206,7 +206,7 @@ class UserServiceImplTest {
   }
 
   @Test
-  void updateUserRoles_ShouldUpdateRolesSuccessfully() {
+  void testUpdateUserRoles_ShouldUpdateRolesSuccessfully() {
     UpdateUserRolesDTO dto = new UpdateUserRolesDTO();
     dto.setId(1L);
     dto.setRoles(List.of("USER", "ADMIN"));

@@ -25,7 +25,7 @@ class UserRolesInitTest {
   }
 
   @Test
-  void run_shouldSeedRoles_whenRepositoryIsEmpty() {
+  void testRunShouldSeedRolesWhenRepositoryIsEmpty() {
     when(roleRepository.count()).thenReturn(0L);
 
     userRolesInit.run();
@@ -43,7 +43,7 @@ class UserRolesInitTest {
   }
 
   @Test
-  void run_shouldDoNothing_whenRolesExist() {
+  void testRunShouldDoNothingWhenRolesExist() {
     when(roleRepository.count()).thenReturn(5L);
 
     userRolesInit.run();

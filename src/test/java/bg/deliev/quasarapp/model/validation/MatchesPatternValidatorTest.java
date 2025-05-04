@@ -48,13 +48,13 @@ class MatchesPatternValidatorTest {
   }
 
   @Test
-  void whenValidString_thenReturnsTrue() {
+  void testWhenValidStringReturnsTrue() {
     assertTrue(validator.isValid("Password@", mock(ConstraintValidatorContext.class)));
     assertTrue(validator.isValid("A@1z", mock(ConstraintValidatorContext.class)));
   }
 
   @Test
-  void whenInvalidString_thenReturnsFalse() {
+  void testWhenInvalidStringReturnsFalse() {
     assertFalse(validator.isValid("password", mock(ConstraintValidatorContext.class))); // no uppercase, no special
     assertFalse(validator.isValid("PASSWORD", mock(ConstraintValidatorContext.class))); // no lowercase, no special
     assertFalse(validator.isValid("Password", mock(ConstraintValidatorContext.class))); // no special
@@ -62,7 +62,7 @@ class MatchesPatternValidatorTest {
   }
 
   @Test
-  void whenNullString_thenReturnsFalse() {
+  void testWhenNullStringReturnsFalse() {
     assertFalse(validator.isValid(null, mock(ConstraintValidatorContext.class)));
   }
 }

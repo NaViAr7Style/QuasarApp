@@ -28,7 +28,7 @@ class UniqueGameNameValidatorTest {
   private UniqueGameNameValidator validator;
 
   @Test
-  void isValid_shouldReturnTrue_whenNameIsUnique() {
+  void testIsValidReturnsTrueWhenNameIsUnique() {
     String gameName = "UniqueGame";
 
     when(gameRepository.findByName(gameName)).thenReturn(Optional.empty());
@@ -39,7 +39,7 @@ class UniqueGameNameValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameAlreadyExists() {
+  void testIsValidReturnsFalseWhenNameAlreadyExists() {
     String gameName = "ExistingGame";
 
     when(gameRepository.findByName(gameName)).thenReturn(Optional.of(new GameEntity()));
@@ -50,7 +50,7 @@ class UniqueGameNameValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameIsNull() {
+  void testIsValidReturnsFalseWhenNameIsNull() {
     boolean result = validator.isValid(null, context);
 
     assertFalse(result);

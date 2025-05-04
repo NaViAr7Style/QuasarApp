@@ -16,7 +16,7 @@ public class MonitoringAspectIT {
     private SampleService sampleService;
 
     @Test
-    void shouldLogWarningWhenExecutionExceedsThreshold() throws InterruptedException {
+    void testShouldLogWarningWhenExecutionExceedsThreshold() throws InterruptedException {
         LogCaptor logCaptor = LogCaptor.forClass(MonitoringAspect.class);
 
         sampleService.slowMethod();
@@ -28,7 +28,7 @@ public class MonitoringAspectIT {
     }
 
     @Test
-    void shouldNotLogWarningWhenExecutionIsFast() throws InterruptedException {
+    void testShouldNotLogWarningWhenExecutionIsFast() throws InterruptedException {
         LogCaptor logCaptor = LogCaptor.forClass(MonitoringAspect.class);
 
         sampleService.fastMethod();

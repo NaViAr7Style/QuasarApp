@@ -28,7 +28,7 @@ public class UniqueUserEmailValidatorTest {
   private UniqueUserEmailValidator validator;
 
   @Test
-  void isValid_shouldReturnTrue_whenNameIsUnique() {
+  void testIsValidReturnsTrueWhenNameIsUnique() {
     String username = "username@unique.com";
 
     when(userRepository.findByEmail(username)).thenReturn(Optional.empty());
@@ -39,7 +39,7 @@ public class UniqueUserEmailValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameAlreadyExists() {
+  void testIsValidReturnsFalseWhenNameAlreadyExists() {
     String username = "username@unique.com";
 
     when(userRepository.findByEmail(username)).thenReturn(Optional.of(new UserEntity()));
@@ -50,7 +50,7 @@ public class UniqueUserEmailValidatorTest {
   }
 
   @Test
-  void isValid_shouldReturnFalse_whenNameIsNull() {
+  void testIsValidReturnsFalseWhenNameIsNull() {
     boolean result = validator.isValid(null, context);
 
     assertFalse(result);

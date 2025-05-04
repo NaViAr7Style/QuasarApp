@@ -58,7 +58,7 @@ class StringFieldMatchValidatorTest {
 
 
   @Test
-  void whenFieldsMatch_thenValidationPasses() {
+  void testWhenFieldsMatchValidationPasses() {
     TestDTO dto = new TestDTO("password123", "password123");
 
     ConstraintValidatorContext context = mock(ConstraintValidatorContext.class);
@@ -67,7 +67,7 @@ class StringFieldMatchValidatorTest {
   }
 
   @Test
-  void whenFieldsDoNotMatch_thenValidationFails() {
+  void testWhenFieldsDoNotMatchValidationFails() {
     TestDTO dto = new TestDTO("password123", "differentPassword");
 
     ConstraintValidatorContext context = mock(ConstraintValidatorContext.class);
@@ -89,7 +89,7 @@ class StringFieldMatchValidatorTest {
   }
 
   @Test
-  void whenOneFieldIsNull_thenValidationFails() {
+  void testWhenOneFieldIsNullValidationFails() {
     TestDTO dto = new TestDTO("password123", null);
 
     ConstraintValidatorContext context = mock(ConstraintValidatorContext.class);
@@ -104,7 +104,7 @@ class StringFieldMatchValidatorTest {
   }
 
   @Test
-  void whenObjectIsNull_thenValidationFails() {
+  void testWhenObjectIsNullValidationFails() {
     ConstraintValidatorContext context = mock(ConstraintValidatorContext.class);
 
     assertFalse(validator.isValid(null, context));
