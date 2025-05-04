@@ -27,5 +27,5 @@ mail:
   quasar: "info@quasargames.com"
   host: ${SMTP_HOST}
   port: ${SMTP_PORT}
-  username: ${MAIL_USER}
+  username: ${MAIL_USERNAME}
   password: ${MAIL_PASSWORD}
