@@ -1,6 +1,7 @@
 package bg.deliev.quasarapp.model.validation;
 
 import jakarta.validation.ConstraintValidatorContext;
+import jakarta.validation.Payload;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +44,7 @@ class StringFieldMatchValidatorTest {
 
       @Override
       @SuppressWarnings("unchecked")
-      public Class<? extends jakarta.validation.Payload>[] payload() {
+      public Class<? extends Payload>[] payload() {
         return new Class[0];
       }
 
