@@ -42,6 +42,7 @@ class StringFieldMatchValidatorTest {
       }
 
       @Override
+      @SuppressWarnings("unchecked")
       public Class<? extends jakarta.validation.Payload>[] payload() {
         return new Class[0];
       }
