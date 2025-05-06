@@ -1,11 +1,11 @@
 USE bl8mhtvdutiek9bkcnfx;
 
-DROP TABLE IF EXISTS roles;
-DROP TABLE IF EXISTS publishers;
-DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS users_roles;
 DROP TABLE IF EXISTS user_activation_codes;
+DROP TABLE IF EXISTS users_roles;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS publishers;
+DROP TABLE IF EXISTS roles;
 
 CREATE TABLE roles (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
