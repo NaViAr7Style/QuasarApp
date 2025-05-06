@@ -13,11 +13,11 @@ public class ErrorHandler {
     private final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleErrors(HttpServletResponse response) {
+    public ModelAndView handleErrors(HttpServletResponse response, Exception e) {
+
+        LOGGER.error("Unhandled exception occurred: {}", e.getMessage(), e);
 
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500
-
-        LOGGER.error("Internal server error: {}", response.getStatus());
 
         return new ModelAndView("error");
     }

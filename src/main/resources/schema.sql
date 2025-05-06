@@ -1,4 +1,5 @@
 USE bl8mhtvdutiek9bkcnfx;
+-- USE quasar_gameshop_app;
 
 DROP TABLE IF EXISTS user_activation_codes;
 DROP TABLE IF EXISTS users_roles;

@@ -42,6 +42,7 @@ public class SecurityConfig {
                 ).formLogin(
                         formLogin -> formLogin
                                 .loginPage("/users/login")
+                                .loginProcessingUrl("/users/login")
                                 .usernameParameter("email")
                                 .passwordParameter("password")
                                 .defaultSuccessUrl("/")

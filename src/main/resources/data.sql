@@ -1,4 +1,5 @@
 USE bl8mhtvdutiek9bkcnfx;
+-- USE quasar_gameshop_app;
 
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
