@@ -2,28 +2,29 @@ FROM eclipse-temurin:17-jdk AS build
 
 WORKDIR /app
 
+# Copy the gradle wrapper and config files
+COPY gradlew build.gradle settings.gradle ./
 COPY gradle ./gradle
-COPY build.gradle settings.gradle gradlew ./
+
+# Make gradlew executable
 RUN chmod +x gradlew
 
-RUN ./gradlew dependencies
+# Pre-download dependencies to cache them
+RUN ./gradlew --no-daemon dependencies
 
+# Copy the source code
 COPY src ./src
 
-RUN ./gradlew clean build -x test
+# Build the application
+RUN ./gradlew --no-daemon clean build -x test
 
 
 FROM eclipse-temurin:17-jre
 
 WORKDIR /app
 
+# Copy the jar file from the build stage
 COPY --from=build /app/build/libs/*.jar app.jar
-
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
-# Add wait-for-it.sh
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
 
 EXPOSE 8080
 
