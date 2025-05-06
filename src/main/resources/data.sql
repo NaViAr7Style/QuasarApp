@@ -1,4 +1,4 @@
-USE ugurgrnfumb5wyyi;
+USE bl8mhtvdutiek9bkcnfx;
 
 INSERT INTO users (id, email, first_name, last_name, password, is_active)
 VALUES
