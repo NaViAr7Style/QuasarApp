@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
-
-<head>
-    <title></title>
-</head>
-
-<body>
-
+<!--suppress ALL -->
 <nav
         th:fragment="navbar"
         class="navbar navbar-expand-lg text-white bg-dark fixed-top">
@@ -42,7 +32,7 @@
                     <a class="nav-link" th:href="@{/contacts}">Contacts</a>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
                     </a>
@@ -69,7 +59,7 @@
                         Welcome,
                         <th:block sec:authentication="name"></th:block>!
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" th:href="@{/user/profile}">Profile</a>
                         <div class="dropdown-divider"></div>
                         <form th:method="POST"
@@ -89,7 +79,3 @@
 
     </div>
 </nav>
-
-</body>
-
-</html>
