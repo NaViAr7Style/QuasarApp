@@ -1,0 +1,12 @@
+name: Nightly Deploy
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # At 05:00 Bulgarian time. Redeploy to reset the database and test data.
+
+jobs:
+  hit-deploy-hook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
