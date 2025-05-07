@@ -22,6 +22,7 @@ import static bg.deliev.quasarapp.testUtils.TestUtils.createValidUserManagementD
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,7 +63,8 @@ public class UserRESTControllerIT {
   public void testDeleteUserById() throws Exception {
     doNothing().when(userService).deleteUserById(TEST_USER_ID);
 
-    mockMvc.perform(delete("/api/users/{id}", TEST_USER_ID))
+    mockMvc.perform(delete("/api/users/{id}", TEST_USER_ID)
+            .with(csrf()))
         .andExpect(status().isNoContent());
   }
 
@@ -78,7 +80,8 @@ public class UserRESTControllerIT {
 
     mockMvc.perform(patch("/api/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(updateDTO)))
+            .content(objectMapper.writeValueAsString(updateDTO))
+            .with(csrf()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.email").value(TEST_EMAIL))
         .andExpect(jsonPath("$.roles[0]").value(TEST_USER_ROLE.name()));
@@ -93,7 +96,8 @@ public class UserRESTControllerIT {
 
     mockMvc.perform(patch("/api/users")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(updateDTO)))
+            .content(objectMapper.writeValueAsString(updateDTO))
+            .with(csrf()))
         .andExpect(status().isNotFound());
   }
 }

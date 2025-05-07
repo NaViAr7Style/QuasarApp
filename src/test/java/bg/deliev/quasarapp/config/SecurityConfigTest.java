@@ -83,11 +83,13 @@ class SecurityConfigTest {
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrlPattern("**/users/login"));
 
-    mockMvc.perform(delete("/api/users/1"))
+    mockMvc.perform(delete("/api/users/1")
+            .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrlPattern("**/users/login"));
 
-    mockMvc.perform(patch("/api/users"))
+    mockMvc.perform(patch("/api/users")
+            .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrlPattern("**/users/login"));
   }
@@ -102,7 +104,7 @@ class SecurityConfigTest {
         .andExpect(redirectedUrl("/games/all"));
     mockMvc.perform(get("/users/manage-roles")).andExpect(status().isOk());
     mockMvc.perform(get("/api/users")).andExpect(status().isOk());
-    mockMvc.perform(delete("/api/users/1")).andExpect(status().isNoContent());
+    mockMvc.perform(delete("/api/users/1").with(csrf())).andExpect(status().isNoContent());
   }
 
   @Test
