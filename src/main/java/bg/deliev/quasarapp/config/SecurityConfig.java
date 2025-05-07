@@ -59,8 +59,8 @@ public class SecurityConfig {
                                 .rememberMeParameter("rememberme")
                                 .rememberMeCookieName("rememberme")
                                 .tokenValiditySeconds(1800)
-                ).csrf(
-                        csrf -> csrf.ignoringRequestMatchers("/api/users/**")
+//                ).csrf(
+//                        csrf -> csrf.ignoringRequestMatchers("/api/users/**")
                 ).build();
     }
 

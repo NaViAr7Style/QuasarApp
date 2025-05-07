@@ -22,7 +22,6 @@
         <th>Full name</th>
         <th>Role</th>
         <th><div class="mr-2">Actions</div></th>
-<!--        <th>Actions</th>-->
     </tr>
     </thead>
     <tbody id="userTable">
@@ -38,6 +37,9 @@
             currentUsername = "[[${username}]]".trim();
             fetchAllUsers();
         });
+
+        const csrfHeaderName = document.querySelector('meta[name="_csrf_header"]').content;
+        const csrfToken = document.querySelector('meta[name="_csrf"]').content;
 
         function fetchAllUsers() {
             userTable.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
@@ -160,7 +162,10 @@
 
             fetch('/api/users', {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    [csrfHeaderName]: csrfToken,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(payload)
             })
                 .then(() => {
@@ -175,7 +180,10 @@
             if (!confirmed) return;
 
             fetch(`/api/users/${userId}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    [csrfHeaderName]: csrfToken
+                }
             })
                 .then(() => fetchAllUsers())
                 .catch(() => window.location.href = '/error');
